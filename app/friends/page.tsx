@@ -95,7 +95,7 @@ export default function FriendsPage() {
                 <span>想交换友链</span>
               </div>
               <p className="mt-4 text-sm leading-7 text-slate-500 dark:text-slate-400">
-                如果你也在认真维护自己的博客、相册页或个人主页，之后这里可以继续扩展成正式的友链列表。
+                如果你的小站也想来这里串门，可以轻轻敲我一下，说不定很快就会一起并排晒太阳。
               </p>
               <Link
                 href="/about"
