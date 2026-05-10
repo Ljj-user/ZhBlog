@@ -6,17 +6,33 @@
     "description": "这里既放输出，也放过程。文章、照片、项目和零碎记录会并排出现，像一本慢慢加页的手账。"
   },
   "quickLinks": [
-    { "label": "最近文章", "description": "按主题和时间继续往下读。", "href": "/posts" },
-    { "label": "时间归档", "description": "像翻日志一样回看每一个阶段。", "href": "/archive" },
-    { "label": "拍立得相册", "description": "把旅行、自然和日常碎片收进去。", "href": "/photos" },
-    { "label": "项目清单", "description": "集中整理正在做和做过的东西。", "href": "/projects" }
+    {
+      "label": "最近文章",
+      "description": "按主题和时间继续往下读。",
+      "href": "/posts"
+    },
+    {
+      "label": "时间归档",
+      "description": "像翻日志一样回看每一个阶段。",
+      "href": "/archive"
+    },
+    {
+      "label": "拍立得相册",
+      "description": "把旅行、自然和日常碎片收进去。",
+      "href": "/photos"
+    },
+    {
+      "label": "项目清单",
+      "description": "集中整理正在做和做过的东西。",
+      "href": "/projects"
+    }
   ],
   "nowCard": {
     "eyebrow": "Now",
     "title": "当前在做",
     "items": [
-      "把博客继续往“长期可维护的个人空间”打磨，而不是一次性的展示页。",
-      "内容会并列放文章、项目、照片和阶段性观察，让站点像一本慢慢变厚的手账。",
+      "把博客继续往“长期可维护的个人空间”打磨",
+      "内容会并列放文章、项目、照片，让站点像一本慢慢变厚的手账。",
       "优先统一组件和视觉语言，减少每块都像单独临时拼出来的感觉。"
     ]
   },

@@ -6,7 +6,7 @@ import { getSiteProfile, getSocialItems } from "@/lib/content"
 
 export const metadata = {
   title: "关于",
-  description: "认识 ZH_Blog 背后的作者与正在推进的事。",
+  description: "认识 ZH_Blog 背后的作者与正在推进的事情。",
 }
 
 export default function AboutPage() {
@@ -120,29 +120,38 @@ export default function AboutPage() {
           </div>
         </SurfaceCard>
 
-        <SurfaceCard className="h-fit border-[rgba(64,45,28,0.12)] bg-[linear-gradient(180deg,rgba(251,247,242,0.94),rgba(243,235,227,0.9))] p-6 text-slate-800 shadow-[0_22px_55px_rgba(58,38,19,0.08)] dark:border-white/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.07),rgba(255,255,255,0.03))] dark:text-white dark:shadow-none lg:col-start-1">
-          <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-white/64">
-            <GraduationCap className="h-4 w-4" />
-            <span>Education & Contact</span>
-          </div>
+        <div className="space-y-5 lg:col-start-1">
+          <SurfaceCard className="h-fit border-[rgba(64,45,28,0.12)] bg-[linear-gradient(180deg,rgba(251,247,242,0.94),rgba(243,235,227,0.9))] p-6 text-slate-800 shadow-[0_22px_55px_rgba(58,38,19,0.08)] dark:border-white/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.07),rgba(255,255,255,0.03))] dark:text-white dark:shadow-none">
+            <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-white/64">
+              <GraduationCap className="h-4 w-4" />
+              <span>Education</span>
+            </div>
 
-          <div className="mt-5 rounded-[1.7rem] border border-[rgba(64,45,28,0.1)] bg-white/62 p-5 shadow-[0_10px_28px_rgba(87,62,38,0.06)] dark:border-white/8 dark:bg-white/[0.04] dark:shadow-none">
-            <p className="text-sm uppercase tracking-[0.24em] text-slate-500 dark:text-white/40">{profile.education.period}</p>
-            <h2 className="mt-4 text-2xl font-medium tracking-[-0.03em] text-slate-900 dark:text-white">{profile.education.school}</h2>
-            <p className="mt-2 text-sm leading-7 text-slate-600 dark:text-white/62">{profile.education.degree}</p>
-          </div>
+            <div className="mt-5 rounded-[1.7rem] border border-[rgba(64,45,28,0.1)] bg-white/62 p-5 shadow-[0_10px_28px_rgba(87,62,38,0.06)] dark:border-white/8 dark:bg-white/[0.04] dark:shadow-none">
+              <p className="text-sm uppercase tracking-[0.24em] text-slate-500 dark:text-white/40">{profile.education.period}</p>
+              <h2 className="mt-4 text-2xl font-medium tracking-[-0.03em] text-slate-900 dark:text-white">{profile.education.school}</h2>
+              <p className="mt-2 text-sm leading-7 text-slate-600 dark:text-white/62">{profile.education.degree}</p>
+            </div>
+          </SurfaceCard>
 
-          <div className="mt-5 rounded-[1.7rem] border border-[rgba(64,45,28,0.1)] bg-white/58 p-5 shadow-[0_10px_28px_rgba(87,62,38,0.06)] dark:border-white/8 dark:bg-white/[0.04] dark:shadow-none">
-            <p className="text-sm leading-7 text-slate-600 dark:text-white/64">{profile.contactCopy}</p>
-            <Link
-              href={`mailto:${profile.email}`}
-              className="mt-5 inline-flex items-center gap-2 rounded-full border border-[rgba(64,45,28,0.12)] bg-[#f7f2eb] px-5 py-3 text-sm text-slate-900 transition-colors hover:bg-[#f1e9df] dark:border-white/10 dark:bg-white/[0.08] dark:text-white dark:hover:bg-white/[0.12]"
-            >
-              写封邮件
-              <ArrowUpRight className="h-4 w-4" />
-            </Link>
-          </div>
-        </SurfaceCard>
+          <SurfaceCard className="h-fit border-[rgba(64,45,28,0.12)] bg-[linear-gradient(180deg,rgba(251,247,242,0.94),rgba(243,235,227,0.9))] p-6 text-slate-800 shadow-[0_22px_55px_rgba(58,38,19,0.08)] dark:border-white/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.07),rgba(255,255,255,0.03))] dark:text-white dark:shadow-none">
+            <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-white/64">
+              <Mail className="h-4 w-4" />
+              <span>Contact</span>
+            </div>
+
+            <div className="mt-5 rounded-[1.7rem] border border-[rgba(64,45,28,0.1)] bg-white/58 p-5 shadow-[0_10px_28px_rgba(87,62,38,0.06)] dark:border-white/8 dark:bg-white/[0.04] dark:shadow-none">
+              <p className="text-sm leading-7 text-slate-600 dark:text-white/64">{profile.contactCopy}</p>
+              <Link
+                href={`mailto:${profile.email}`}
+                className="mt-5 inline-flex items-center gap-2 rounded-full border border-[rgba(64,45,28,0.12)] bg-[#f7f2eb] px-5 py-3 text-sm text-slate-900 transition-colors hover:bg-[#f1e9df] dark:border-white/10 dark:bg-white/[0.08] dark:text-white dark:hover:bg-white/[0.12]"
+              >
+                写封邮件
+                <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </SurfaceCard>
+        </div>
       </section>
     </main>
   )

@@ -8,12 +8,21 @@
   "summary": "偏爱能被长期维护的系统，也在练习把复杂问题讲得更清楚。最近主要在做 Web 体验、前端工程、内容型产品和个人表达相关的事情。",
   "bio": "一个把文章、项目、照片和成长片段放在一起的个人站点。",
   "location": "中国 / 远程友好 / 个人创作",
-  "aboutLocation": "北京",
+  "aboutLocation": "天津",
   "email": "2694569918@qq.com",
   "focusSummary": "写作、前端体验、项目复盘和日常记录",
   "availabilityLabel": "ONLINE",
-  "profileTags": ["长期写作", "产品感知", "持续更新"],
-  "aboutTags": ["长期主义", "Web 体验", "内容表达"],
+  "profileTags": [
+    "长期写作",
+    "产品感知",
+    "持续更新"
+  ],
+  "aboutTags": [
+    "长期主义",
+    "Web 体验",
+    "内容表达",
+    "AI learner"
+  ],
   "focusAreas": [
     "把博客做成可持续生长的个人主页，而不是一次性的展示页。",
     "持续写技术、项目复盘和生活观察，让内容慢慢长出自己的纹理。",
@@ -22,15 +31,33 @@
   "skillGroups": [
     {
       "title": "前端 / 体验",
-      "items": ["React", "Next.js", "TypeScript", "Tailwind CSS", "Design Sense"]
+      "items": [
+        "React",
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Design Sense"
+      ]
     },
     {
       "title": "后端 / 工程",
-      "items": ["Node.js", "Python", "PostgreSQL", "Redis", "Automation"]
+      "items": [
+        "Node.js",
+        "Python",
+        "PostgreSQL",
+        "Redis",
+        "Automation"
+      ]
     },
     {
       "title": "表达 / 兴趣",
-      "items": ["Writing", "Photography", "Travel", "Curation", "Reflection"]
+      "items": [
+        "Writing",
+        "Photography",
+        "Travel",
+        "Curation",
+        "Reflection"
+      ]
     }
   ],
   "experience": [

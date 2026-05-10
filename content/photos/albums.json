@@ -1,7 +1,7 @@
 {
   "items": [
     {
-      "id": "travel",
+      "id": "trave",
       "name": "旅行",
       "description": "在路上的风景、山海和停留片刻。"
     },
@@ -14,6 +14,11 @@
       "id": "city",
       "name": "城市",
       "description": "夜色、窗口和城市的呼吸感。"
+    },
+    {
+      "id": "people",
+      "name": "人物",
+      "description": "写一点这个相册的说明"
     }
   ]
 }

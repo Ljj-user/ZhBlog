@@ -174,10 +174,10 @@ export function QuickLinkCard({
 const polaroidRotations = ["-rotate-[3.5deg]", "rotate-[2.4deg]", "-rotate-[1.6deg]", "rotate-[3.1deg]"]
 const polaroidOffsets = ["lg:mt-5", "lg:-mt-1", "lg:mt-4", "lg:mt-10"]
 const polaroidWidths = [
-  "lg:w-[10.5rem] xl:w-[11.1rem]",
-  "lg:w-[9.9rem] xl:w-[10.5rem]",
-  "lg:w-[10.6rem] xl:w-[11.2rem]",
-  "lg:w-[9.5rem] xl:w-[10.1rem]",
+  "lg:w-[11.4rem] xl:w-[12.2rem]",
+  "lg:w-[10.8rem] xl:w-[11.5rem]",
+  "lg:w-[11.5rem] xl:w-[12.3rem]",
+  "lg:w-[10.5rem] xl:w-[11.2rem]",
 ]
 
 export function PolaroidPhotoCard({
@@ -200,7 +200,7 @@ export function PolaroidPhotoCard({
       href={href}
       onClickCapture={onClickCapture}
       className={cn(
-        "group block w-[9.8rem] flex-none rounded-[1.25rem] bg-white p-3 shadow-[0_22px_45px_rgba(31,41,55,0.12)] ring-1 ring-slate-200/80 transition-all duration-300 hover:-translate-y-2 hover:rotate-0 hover:shadow-[0_28px_60px_rgba(31,41,55,0.16)] dark:bg-slate-50 dark:ring-white/10 sm:p-3.5",
+        "group block w-[10.8rem] flex-none rounded-[1.35rem] bg-white p-3.5 shadow-[0_22px_45px_rgba(31,41,55,0.12)] ring-1 ring-slate-200/80 transition-all duration-300 hover:-translate-y-2 hover:rotate-0 hover:shadow-[0_28px_60px_rgba(31,41,55,0.16)] dark:bg-slate-50 dark:ring-white/10 sm:p-4",
         polaroidRotations[index % polaroidRotations.length],
         polaroidOffsets[index % polaroidOffsets.length],
         polaroidWidths[index % polaroidWidths.length],
@@ -218,10 +218,10 @@ export function PolaroidPhotoCard({
         </div>
       </div>
 
-      <div className="border-t border-dashed border-slate-200/90 px-1 pb-0.5 pt-3">
+      <div className="border-t border-dashed border-slate-200/90 px-1 pb-1 pt-3.5">
         <p className="text-[0.63rem] tracking-[0.22em] text-slate-400">{note}</p>
-        <h4 className="mt-1.5 break-words text-[1rem] font-medium leading-snug text-slate-800 lg:text-[1.15rem]">{title}</h4>
-        <div className="mt-2.5 flex items-center justify-between gap-3 text-[0.66rem] text-slate-400">
+        <h4 className="mt-2 break-words text-[1.08rem] font-medium leading-snug text-slate-800 lg:text-[1.22rem]">{title}</h4>
+        <div className="mt-3 flex items-center justify-between gap-3 text-[0.68rem] text-slate-400">
           <span>{`Frame ${String(index + 1).padStart(2, "0")}`}</span>
           <span>2026</span>
         </div>

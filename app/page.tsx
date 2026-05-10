@@ -6,7 +6,7 @@ export default function HomePage() {
   const posts = getAllPosts().slice(0, 3)
   const profile = getSiteProfile()
   const homeContent = getHomeContent()
-  const featuredPhotos = getFeaturedPhotos(4)
+  const featuredPhotos = getFeaturedPhotos(10)
 
   return <HomePageClient posts={posts} profile={profile} homeContent={homeContent} featuredPhotos={featuredPhotos} />
 }
