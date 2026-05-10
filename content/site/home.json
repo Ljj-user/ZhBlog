@@ -1,0 +1,56 @@
+{
+  "hero": {
+    "eyebrow": "FIELD NOTES",
+    "titleLine1": "把博客写成一个",
+    "titleLine2": "会呼吸的个人角落",
+    "description": "这里既放输出，也放过程。文章、照片、项目和零碎记录会并排出现，像一本慢慢加页的手账。"
+  },
+  "quickLinks": [
+    { "label": "最近文章", "description": "按主题和时间继续往下读。", "href": "/posts" },
+    { "label": "时间归档", "description": "像翻日志一样回看每一个阶段。", "href": "/archive" },
+    { "label": "拍立得相册", "description": "把旅行、自然和日常碎片收进去。", "href": "/photos" },
+    { "label": "项目清单", "description": "集中整理正在做和做过的东西。", "href": "/projects" }
+  ],
+  "nowCard": {
+    "eyebrow": "Now",
+    "title": "当前在做",
+    "items": [
+      "把博客继续往“长期可维护的个人空间”打磨，而不是一次性的展示页。",
+      "内容会并列放文章、项目、照片和阶段性观察，让站点像一本慢慢变厚的手账。",
+      "优先统一组件和视觉语言，减少每块都像单独临时拼出来的感觉。"
+    ]
+  },
+  "noticeCard": {
+    "eyebrow": "NOTICE BOARD",
+    "title": "站点说明",
+    "items": [
+      "文章页适合按主题进入，归档页更适合按时间回看。",
+      "首页会继续向组件搭积木的方式收敛，减少 page 里堆结构。",
+      "照片、项目和社媒入口都会共享同一套卡片语法。"
+    ]
+  },
+  "photoStrip": {
+    "eyebrow": "PHOTO GLIMPSE",
+    "title": "拍立得相册",
+    "badge": "POLAROID STRIP / 2026",
+    "description": "按卡片自然排布，而不是横向硬挤。",
+    "coverTitleLine1": "更多照片",
+    "coverTitleLine2": "在相册页里",
+    "coverDescription": "从旅行、自然到日常碎片，把它们继续收进更完整的一本相册里。"
+  },
+  "recentWriting": {
+    "eyebrow": "RECENT WRITING",
+    "title": "最近文章",
+    "linkLabel": "进入文章页"
+  },
+  "designMedia": {
+    "eyebrow": "DESIGN MEDIA",
+    "title": "视觉参考入口",
+    "description": "后续可以放设计收藏、灵感来源、视觉研究，或者最常用的媒体入口。",
+    "backgroundImage": "https://i.111666.best/image/CxWIDdxmHvpVvDywXcP0ts.png"
+  },
+  "player": {
+    "eyebrow": "PLAYER SLOT",
+    "title": "播放卡片"
+  }
+}

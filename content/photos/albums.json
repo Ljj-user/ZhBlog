@@ -1,0 +1,19 @@
+{
+  "items": [
+    {
+      "id": "travel",
+      "name": "旅行",
+      "description": "在路上的风景、山海和停留片刻。"
+    },
+    {
+      "id": "nature",
+      "name": "自然",
+      "description": "树影、晨雾、湖面和季节里的颜色。"
+    },
+    {
+      "id": "city",
+      "name": "城市",
+      "description": "夜色、窗口和城市的呼吸感。"
+    }
+  ]
+}

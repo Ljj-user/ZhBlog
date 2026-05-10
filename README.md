@@ -9,13 +9,37 @@ npm run dev
 
 Open `http://localhost:3000` in your browser.
 
+## Content Management
+
+This project now separates mutable content from page code.
+
+Main content files:
+
+- `content/site/profile.json`
+- `content/site/home.json`
+- `content/site/social-links.json`
+- `content/site/navigation.json`
+- `content/site/friends.json`
+- `content/site/projects.json`
+- `content/photos/albums.json`
+- `content/photos/photos.json`
+
+Admin scaffold:
+
+- `http://localhost:3000/admin`
+- `public/admin/config.yml`
+
+Before using the CMS in production, replace the placeholder GitHub repo in `public/admin/config.yml`.
+
+More details:
+
+- `CONTENT_ADMIN_SETUP.md`
+
 ## GitHub Contributions
 
-The projects page can render real GitHub contribution data for the last year.
+The projects page renders real GitHub contribution data for the last year by default from the public GitHub contributions page.
 
-1. Copy `.env.example` to `.env.local`
-2. Set `GITHUB_TOKEN` to your GitHub personal access token
-3. Restart `npm run dev`
+If you want to use the GitHub GraphQL API instead, set `GITHUB_TOKEN` in `.env.local` and restart `npm run dev`.
 
 `.env.local` is already ignored by git.
 

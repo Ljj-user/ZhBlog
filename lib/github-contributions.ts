@@ -139,11 +139,140 @@ export function getContributionIntensity(count: number, maxCount: number) {
   return "low"
 }
 
+function addDays(date: Date, amount: number) {
+  const next = new Date(date)
+  next.setUTCDate(next.getUTCDate() + amount)
+  return next
+}
+
+function formatDateKey(date: Date) {
+  return date.toISOString().slice(0, 10)
+}
+
+function startOfWeek(date: Date) {
+  return addDays(date, -date.getUTCDay())
+}
+
+function endOfWeek(date: Date) {
+  return addDays(date, 6 - date.getUTCDay())
+}
+
+function getAttribute(tag: string, name: string) {
+  const match = tag.match(new RegExp(`${name}="([^"]+)"`))
+  return match?.[1]
+}
+
+function buildMonths(weeks: ContributionWeek[]): ContributionMonth[] {
+  const months: ContributionMonth[] = []
+
+  weeks.forEach((week, index) => {
+    const weekDates = week.contributionDays.map((day) => new Date(day.date))
+    const firstOfMonth = weekDates.find((date) => date.getUTCDate() === 1)
+    const labelDate = index === 0 ? weekDates[0] : firstOfMonth
+
+    if (!labelDate) {
+      return
+    }
+
+    months.push({
+      firstDay: week.firstDay,
+      name: labelDate.toLocaleString("en-US", { month: "short", timeZone: "UTC" }),
+      totalWeeks: 0,
+      year: labelDate.getUTCFullYear(),
+    })
+  })
+
+  return months.map((month, index) => ({
+    ...month,
+    totalWeeks: (months[index + 1] ? weeks.findIndex((week) => week.firstDay === months[index + 1].firstDay) : weeks.length) -
+      weeks.findIndex((week) => week.firstDay === month.firstDay),
+  }))
+}
+
+async function getPublicGithubContributionCalendar(username: string): Promise<ContributionCalendar> {
+  const to = new Date()
+  const from = new Date(to)
+  from.setUTCFullYear(to.getUTCFullYear() - 1)
+
+  const fromKey = formatDateKey(from)
+  const toKey = formatDateKey(to)
+
+  const response = await fetch(`https://github.com/users/${username}/contributions?from=${fromKey}&to=${toKey}`, {
+    headers: {
+      "User-Agent": "ZhBlog",
+    },
+    next: { revalidate: 3600 },
+  })
+
+  if (!response.ok) {
+    throw new Error(`GitHub contributions page request failed with status ${response.status}`)
+  }
+
+  const svg = await response.text()
+  const rectTags = svg.match(/<rect\b[^>]*data-date="[^"]+"[^>]*>/g) ?? []
+
+  if (!rectTags.length) {
+    throw new Error(`No public contribution data returned for ${username}`)
+  }
+
+  const contributions = rectTags
+    .map((tag) => {
+      const date = getAttribute(tag, "data-date")
+      const count = Number(getAttribute(tag, "data-count") ?? "0")
+
+      if (!date) {
+        return null
+      }
+
+      return {
+        contributionCount: Number.isFinite(count) ? count : 0,
+        date,
+      }
+    })
+    .filter((day): day is { contributionCount: number; date: string } => day !== null)
+    .sort((left, right) => left.date.localeCompare(right.date))
+
+  if (!contributions.length) {
+    throw new Error(`Parsed contribution data for ${username} was empty`)
+  }
+
+  const contributionMap = new Map(contributions.map((day) => [day.date, day.contributionCount]))
+  const firstDate = new Date(`${contributions[0].date}T00:00:00.000Z`)
+  const lastDate = new Date(`${contributions[contributions.length - 1].date}T00:00:00.000Z`)
+  const firstWeekStart = startOfWeek(firstDate)
+  const lastWeekEnd = endOfWeek(lastDate)
+  const weeks: ContributionWeek[] = []
+
+  for (let weekStart = new Date(firstWeekStart); weekStart <= lastWeekEnd; weekStart = addDays(weekStart, 7)) {
+    const contributionDays: ContributionDay[] = Array.from({ length: FALLBACK_ROWS }).map((_, weekday) => {
+      const day = addDays(weekStart, weekday)
+      const dateKey = formatDateKey(day)
+
+      return {
+        contributionCount: contributionMap.get(dateKey) ?? 0,
+        date: `${dateKey}T00:00:00.000Z`,
+        weekday,
+      }
+    })
+
+    weeks.push({
+      contributionDays,
+      firstDay: contributionDays[0]?.date ?? weekStart.toISOString(),
+    })
+  }
+
+  return {
+    months: buildMonths(weeks),
+    totalContributions: contributions.reduce((sum, day) => sum + day.contributionCount, 0),
+    weeks,
+  }
+}
+
 export async function getGithubContributionCalendar(username: string): Promise<ContributionCalendar> {
   const token = process.env.GITHUB_TOKEN
 
   if (!token) {
-    return getFallbackContributionCalendar()
+    return getPublicGithubContributionCalendar(username)
   }
 
   const to = new Date()

@@ -2,48 +2,36 @@
 
 import Image from "next/image"
 import { useMemo, useState } from "react"
-import { Badge } from "@/components/ui/badge"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
-
-interface Photo {
-  id: string
-  src: string
-  alt: string
-  width: number
-  height: number
-  album: string
-  date: string
-  caption: string
-}
+import { SectionHeader, SurfaceCard } from "@/components/site/cards"
+import { Button } from "@/components/ui/button"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
+import type { PhotoAlbum, PhotoItem } from "@/lib/content"
 
 interface PhotoGalleryProps {
-  photos: Photo[]
-  albums: string[]
+  photos: Array<PhotoItem & { albumName: string }>
+  albums: PhotoAlbum[]
 }
 
 const cardRotations = ["-rotate-[2.4deg]", "rotate-[1.8deg]", "-rotate-[1.2deg]", "rotate-[2.8deg]"]
 
 export function PhotoGallery({ photos, albums }: PhotoGalleryProps) {
   const [selectedAlbum, setSelectedAlbum] = useState<string | null>(null)
-  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null)
+  const [selectedPhoto, setSelectedPhoto] = useState<(PhotoItem & { albumName: string }) | null>(null)
   const [lightboxIndex, setLightboxIndex] = useState(0)
 
   const filteredPhotos = useMemo(
-    () => (selectedAlbum ? photos.filter((photo) => photo.album === selectedAlbum) : photos),
+    () => (selectedAlbum ? photos.filter((photo) => photo.albumId === selectedAlbum) : photos),
     [photos, selectedAlbum],
   )
 
-  const openLightbox = (photo: Photo) => {
+  const openLightbox = (photo: PhotoItem & { albumName: string }) => {
     const index = filteredPhotos.findIndex((item) => item.id === photo.id)
     setLightboxIndex(index)
     setSelectedPhoto(photo)
   }
 
-  const closeLightbox = () => {
-    setSelectedPhoto(null)
-  }
+  const closeLightbox = () => setSelectedPhoto(null)
 
   const goToPrevious = () => {
     const newIndex = lightboxIndex > 0 ? lightboxIndex - 1 : filteredPhotos.length - 1
@@ -59,30 +47,35 @@ export function PhotoGallery({ photos, albums }: PhotoGalleryProps) {
 
   return (
     <>
-      <section className="rounded-[2.4rem] border border-white/70 bg-white/78 p-6 shadow-[0_24px_80px_rgba(31,41,55,0.1)] backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.05] dark:shadow-[0_16px_50px_rgba(0,0,0,0.22)] sm:p-8">
+      <SurfaceCard className="p-6 sm:p-8">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <p className="text-[0.72rem] tracking-[0.28em] text-slate-400 dark:text-slate-500">ALBUM FILTER</p>
-            <h2 className="mt-3 text-2xl font-medium text-slate-800 dark:text-slate-100">拍立得墙</h2>
-          </div>
+          <SectionHeader eyebrow="ALBUM FILTER" title="拍立得墙" />
 
           <div className="flex flex-wrap gap-2">
-            <Badge
-              variant={selectedAlbum === null ? "secondary" : "outline"}
-              className="cursor-pointer rounded-full px-4 py-1.5 text-sm transition-colors hover:bg-slate-100 dark:hover:bg-white/10"
+            <button
+              type="button"
               onClick={() => setSelectedAlbum(null)}
+              className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
+                selectedAlbum === null
+                  ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900"
+                  : "border border-slate-200 bg-white/72 text-slate-500 hover:bg-slate-100 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 dark:hover:bg-white/10"
+              }`}
             >
               全部
-            </Badge>
+            </button>
             {albums.map((album) => (
-              <Badge
-                key={album}
-                variant={selectedAlbum === album ? "secondary" : "outline"}
-                className="cursor-pointer rounded-full px-4 py-1.5 text-sm transition-colors hover:bg-slate-100 dark:hover:bg-white/10"
-                onClick={() => setSelectedAlbum(album)}
+              <button
+                key={album.id}
+                type="button"
+                onClick={() => setSelectedAlbum(album.id)}
+                className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
+                  selectedAlbum === album.id
+                    ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900"
+                    : "border border-slate-200 bg-white/72 text-slate-500 hover:bg-slate-100 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 dark:hover:bg-white/10"
+                }`}
               >
-                {album}
-              </Badge>
+                {album.name}
+              </button>
             ))}
           </div>
         </div>
@@ -108,7 +101,7 @@ export function PhotoGallery({ photos, albums }: PhotoGalleryProps) {
                 </div>
 
                 <div className="border-t border-dashed border-slate-200/90 px-1 pb-1 pt-4">
-                  <p className="text-[0.68rem] tracking-[0.24em] text-slate-400">{photo.album}</p>
+                  <p className="text-[0.68rem] tracking-[0.24em] text-slate-400">{photo.albumName}</p>
                   <h3 className="mt-2 text-xl font-medium leading-tight text-slate-800">{photo.alt}</h3>
                   <p className="mt-3 line-clamp-2 text-sm leading-6 text-slate-500">{photo.caption}</p>
                   <div className="mt-4 flex items-center justify-between text-xs text-slate-400">
@@ -120,7 +113,7 @@ export function PhotoGallery({ photos, albums }: PhotoGalleryProps) {
             </button>
           ))}
         </div>
-      </section>
+      </SurfaceCard>
 
       <Dialog open={!!selectedPhoto} onOpenChange={closeLightbox}>
         <DialogContent className="max-w-6xl border-none bg-[rgba(7,10,15,0.94)] p-0 shadow-none" showCloseButton={false}>
@@ -146,7 +139,7 @@ export function PhotoGallery({ photos, albums }: PhotoGalleryProps) {
                 <span className="sr-only">上一张</span>
               </Button>
 
-              {selectedPhoto && (
+              {selectedPhoto ? (
                 <div className="rounded-[1.4rem] bg-white p-4 shadow-[0_24px_60px_rgba(0,0,0,0.35)]">
                   <div className="relative h-[58vh] w-[min(68vw,760px)] max-w-full overflow-hidden rounded-[0.9rem] bg-slate-100">
                     <Image
@@ -158,11 +151,11 @@ export function PhotoGallery({ photos, albums }: PhotoGalleryProps) {
                     />
                   </div>
                   <div className="flex items-center justify-between border-t border-dashed border-slate-200 px-2 pb-1 pt-4 text-xs text-slate-400">
-                    <span>{selectedPhoto.album}</span>
+                    <span>{selectedPhoto.albumName}</span>
                     <span>{selectedPhoto.date}</span>
                   </div>
                 </div>
-              )}
+              ) : null}
 
               <Button
                 variant="ghost"
@@ -175,7 +168,7 @@ export function PhotoGallery({ photos, albums }: PhotoGalleryProps) {
               </Button>
             </div>
 
-            {selectedPhoto && (
+            {selectedPhoto ? (
               <aside className="border-t border-white/10 bg-white/[0.03] p-6 text-white lg:border-l lg:border-t-0">
                 <p className="text-[0.72rem] tracking-[0.26em] text-white/45">PHOTO DETAIL</p>
                 <h3 className="mt-4 text-3xl font-medium tracking-tight">{selectedPhoto.alt}</h3>
@@ -184,7 +177,7 @@ export function PhotoGallery({ photos, albums }: PhotoGalleryProps) {
                 <div className="mt-8 space-y-4 rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-5">
                   <div className="flex items-center justify-between text-sm text-white/60">
                     <span>相册分类</span>
-                    <span>{selectedPhoto.album}</span>
+                    <span>{selectedPhoto.albumName}</span>
                   </div>
                   <div className="flex items-center justify-between text-sm text-white/60">
                     <span>拍摄日期</span>
@@ -213,7 +206,7 @@ export function PhotoGallery({ photos, albums }: PhotoGalleryProps) {
                   </Button>
                 </div>
               </aside>
-            )}
+            ) : null}
           </div>
         </DialogContent>
       </Dialog>

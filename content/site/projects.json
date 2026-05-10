@@ -1,0 +1,49 @@
+{
+  "githubProfile": {
+    "username": "Ljj-user",
+    "url": "https://github.com/Ljj-user"
+  },
+  "hero": {
+    "eyebrow": "PROJECTS & TOOLS",
+    "title": "项目",
+    "description": "这里放正在做、做过和会持续维护的东西。项目卡和首页、友链、社媒入口共享同一套组件语言，减少每页各写各的。"
+  },
+  "listHeading": "Projects & Tools",
+  "items": [
+    {
+      "slug": "cryptobacktest-learn",
+      "title": "Cryptobacktest-learn",
+      "tags": ["GitHub", "Backtest"],
+      "description": "围绕回测方向做的实验仓库，用来记录策略研究、练习和相关开发过程。",
+      "href": "https://github.com/Ljj-user/Cryptobacktest-learn"
+    },
+    {
+      "slug": "crypto-sentinel",
+      "title": "Crypto-sentinel",
+      "tags": ["GitHub", "Monitor"],
+      "description": "加密资产监控相关项目，用来沉淀预警、观察与自动化实践。",
+      "href": "https://github.com/Ljj-user/Crypto-sentinel"
+    },
+    {
+      "slug": "rare-earth-nuggets",
+      "title": "Rare-earth-Nuggets",
+      "tags": ["GitHub", "Collection"],
+      "description": "用于整理想法、资料和项目碎片的仓库，偏向持续积累与迭代。",
+      "href": "https://github.com/Ljj-user/Rare-earth-Nuggets"
+    },
+    {
+      "slug": "zhblog",
+      "title": "ZhBlog",
+      "tags": ["GitHub", "Blog"],
+      "description": "当前博客项目的源码仓库，包含页面搭建、样式调整和内容组织。",
+      "href": "https://github.com/Ljj-user/ZhBlog"
+    },
+    {
+      "slug": "community-service",
+      "title": "community-service",
+      "tags": ["GitHub", "Full Stack"],
+      "description": "社区服务方向的项目仓库，承载完整功能实现与产品化尝试。",
+      "href": "https://github.com/Ljj-user/community-service"
+    }
+  ]
+}

@@ -1,35 +1,26 @@
 import Link from "next/link"
-import { Github, Twitter, Mail, Rss } from "lucide-react"
-
-const socialLinks = [
-  { name: "GitHub", href: "https://github.com", icon: Github },
-  { name: "Twitter", href: "https://twitter.com", icon: Twitter },
-  { name: "Email", href: "mailto:hello@example.com", icon: Mail },
-  { name: "RSS", href: "/feed.xml", icon: Rss },
-]
+import { socialItems } from "@/components/site/navigation"
+import { getSiteProfile } from "@/lib/content"
 
 export function Footer() {
+  const profile = getSiteProfile()
+
   return (
-    <footer className="border-t border-border/40">
-      <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-          <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} 我的博客. 保留所有权利.
-          </p>
-          <div className="flex items-center gap-4">
-            {socialLinks.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-muted-foreground transition-colors hover:text-foreground"
-                aria-label={item.name}
-                target={item.href.startsWith("http") ? "_blank" : undefined}
-                rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-              >
-                <item.icon className="h-5 w-5" />
-              </Link>
-            ))}
-          </div>
+    <footer className="px-4 pb-6 pt-10 sm:px-6 lg:px-10">
+      <div className="mx-auto flex max-w-[1400px] flex-col gap-4 rounded-[1.9rem] border border-black/10 bg-white/64 px-5 py-5 text-sm text-slate-500 backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+        <p>&copy; {new Date().getFullYear()} {profile.siteTitle}. 记录长期写作、项目和生活切片。</p>
+        <div className="flex flex-wrap items-center gap-2">
+          {socialItems.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              target={item.href.startsWith("http") ? "_blank" : undefined}
+              rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              className="rounded-full border border-black/10 bg-white/82 px-3 py-1.5 text-xs tracking-[0.14em] text-slate-600 transition-colors hover:bg-white hover:text-slate-900 dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:bg-white/[0.1] dark:hover:text-white"
+            >
+              {item.name}
+            </Link>
+          ))}
         </div>
       </div>
     </footer>

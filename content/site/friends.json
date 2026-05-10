@@ -1,0 +1,47 @@
+{
+  "hero": {
+    "eyebrow": "FRIENDS & LINKS",
+    "title": "友链",
+    "description": "这里放一些我愿意长期回访的网站。它们也许写技术，也许写生活，但通常都有鲜明的作者气质。"
+  },
+  "preferenceCard": {
+    "eyebrow": "偏好",
+    "title": "链接偏好",
+    "items": [
+      "更偏爱有长期更新习惯、内容真实、个人风格鲜明的站点。",
+      "不一定要很“专业”，但最好是有人味的，而不是纯模板化输出。"
+    ]
+  },
+  "exchangeCard": {
+    "title": "想交换友链？",
+    "description": "如果你的小站也想来这里串门，可以轻轻敲我一下。只要内容和表达气质契合，就很欢迎并排晒太阳。",
+    "ctaLabel": "去关于页联系我",
+    "ctaHref": "/about"
+  },
+  "items": [
+    {
+      "name": "留白日志",
+      "url": "https://example.com",
+      "description": "记录设计、写作和慢节奏生活的个人空间，排版很舒服。",
+      "tag": "Design / Writing"
+    },
+    {
+      "name": "山野程序员",
+      "url": "https://example.com",
+      "description": "前端工程、效率工具和长期主义实践，内容扎实也很真诚。",
+      "tag": "Frontend / Tooling"
+    },
+    {
+      "name": "微光相册",
+      "url": "https://example.com",
+      "description": "摄影、旅行和日常观察，适合偶尔点进去发发呆。",
+      "tag": "Photo / Travel"
+    },
+    {
+      "name": "产品散步",
+      "url": "https://example.com",
+      "description": "聊产品感受、交互细节和互联网观察，更新频率稳定。",
+      "tag": "Product / UX"
+    }
+  ]
+}

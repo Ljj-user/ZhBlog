@@ -1,0 +1,292 @@
+# 在正式启用前，请先把下面的 repo / branch 改成你自己的仓库信息。
+# 如果未来改用 Netlify Identity、Git Gateway 或其他认证方式，也只需要调整 backend 段。
+backend:
+  name: github
+  repo: Ljj-user/ZhBlog
+  branch: main
+
+local_backend: true
+publish_mode: editorial_workflow
+
+site_url: http://localhost:3000
+display_url: http://localhost:3000
+
+media_library:
+  name: uploadcare
+
+collections:
+  - name: site_profile
+    label: 站点资料
+    files:
+      - name: profile
+        label: 作者资料
+        file: content/site/profile.json
+        format: json
+        fields:
+          - { label: 站点标题, name: siteTitle, widget: string }
+          - { label: 姓名, name: name, widget: string }
+          - { label: 身份标题, name: role, widget: string }
+          - { label: 头像 URL, name: avatar, widget: string }
+          - { label: 首页封面图 URL, name: coverImage, widget: string }
+          - { label: 个人简介, name: bio, widget: text }
+          - { label: 长介绍, name: intro, widget: text }
+          - { label: 简短总结, name: summary, widget: text }
+          - { label: 首页位置文案, name: location, widget: string }
+          - { label: 关于页位置, name: aboutLocation, widget: string }
+          - { label: 邮箱, name: email, widget: string }
+          - { label: 首页关注摘要, name: focusSummary, widget: string }
+          - { label: 在线状态标签, name: availabilityLabel, widget: string }
+          - label: 首页标签
+            name: profileTags
+            widget: list
+            field: { label: 标签, name: tag, widget: string }
+          - label: 关于页标签
+            name: aboutTags
+            widget: list
+            field: { label: 标签, name: tag, widget: string }
+          - label: 当前关注
+            name: focusAreas
+            widget: list
+            field: { label: 条目, name: item, widget: text }
+          - label: 技能分组
+            name: skillGroups
+            widget: list
+            fields:
+              - { label: 分组标题, name: title, widget: string }
+              - label: 技能项
+                name: items
+                widget: list
+                field: { label: 技能, name: item, widget: string }
+          - label: 经历
+            name: experience
+            widget: list
+            fields:
+              - { label: 时间段, name: period, widget: string }
+              - { label: 标题, name: title, widget: string }
+              - { label: 组织, name: org, widget: string }
+              - { label: 描述, name: description, widget: text }
+          - label: 教育信息
+            name: education
+            widget: object
+            fields:
+              - { label: 时间段, name: period, widget: string }
+              - { label: 学校, name: school, widget: string }
+              - { label: 专业/学位, name: degree, widget: string }
+          - { label: 联系文案, name: contactCopy, widget: text }
+          - { label: 首页邮件按钮标题, name: homeSidebarEmailLabel, widget: string }
+          - { label: 首页邮件按钮描述, name: homeSidebarEmailDescription, widget: string }
+
+      - name: home
+        label: 首页内容
+        file: content/site/home.json
+        format: json
+        fields:
+          - label: Hero 区
+            name: hero
+            widget: object
+            fields:
+              - { label: 眉标题, name: eyebrow, widget: string }
+              - { label: 标题第一行, name: titleLine1, widget: string }
+              - { label: 标题第二行, name: titleLine2, widget: string }
+              - { label: 描述, name: description, widget: text }
+          - label: 快捷入口
+            name: quickLinks
+            widget: list
+            fields:
+              - { label: 标题, name: label, widget: string }
+              - { label: 描述, name: description, widget: string }
+              - { label: 链接, name: href, widget: string }
+          - label: 当前在做卡片
+            name: nowCard
+            widget: object
+            fields:
+              - { label: 眉标题, name: eyebrow, widget: string }
+              - { label: 卡片标题, name: title, widget: string }
+              - label: 条目
+                name: items
+                widget: list
+                field: { label: 条目, name: item, widget: text }
+          - label: 站点说明卡片
+            name: noticeCard
+            widget: object
+            fields:
+              - { label: 眉标题, name: eyebrow, widget: string }
+              - { label: 卡片标题, name: title, widget: string }
+              - label: 条目
+                name: items
+                widget: list
+                field: { label: 条目, name: item, widget: text }
+          - label: 照片条带
+            name: photoStrip
+            widget: object
+            fields:
+              - { label: 眉标题, name: eyebrow, widget: string }
+              - { label: 标题, name: title, widget: string }
+              - { label: 徽标文字, name: badge, widget: string }
+              - { label: 说明, name: description, widget: string }
+              - { label: 封面标题第一行, name: coverTitleLine1, widget: string }
+              - { label: 封面标题第二行, name: coverTitleLine2, widget: string }
+              - { label: 封面描述, name: coverDescription, widget: text }
+          - label: 最近文章模块
+            name: recentWriting
+            widget: object
+            fields:
+              - { label: 眉标题, name: eyebrow, widget: string }
+              - { label: 标题, name: title, widget: string }
+              - { label: 链接文案, name: linkLabel, widget: string }
+          - label: 设计媒体卡片
+            name: designMedia
+            widget: object
+            fields:
+              - { label: 眉标题, name: eyebrow, widget: string }
+              - { label: 标题, name: title, widget: string }
+              - { label: 描述, name: description, widget: text }
+              - { label: 背景图 URL, name: backgroundImage, widget: string }
+          - label: 播放器卡片
+            name: player
+            widget: object
+            fields:
+              - { label: 眉标题, name: eyebrow, widget: string }
+              - { label: 标题, name: title, widget: string }
+
+      - name: social_links
+        label: 社媒链接
+        file: content/site/social-links.json
+        format: json
+        fields:
+          - label: 链接列表
+            name: items
+            widget: list
+            summary: "{{fields.name}}"
+            fields:
+              - { label: 名称, name: name, widget: string }
+              - { label: 链接, name: href, widget: string }
+
+      - name: navigation
+        label: 导航菜单
+        file: content/site/navigation.json
+        format: json
+        fields:
+          - label: 菜单项
+            name: items
+            widget: list
+            summary: "{{fields.name}}"
+            fields:
+              - { label: 名称, name: name, widget: string }
+              - { label: 链接, name: href, widget: string }
+
+      - name: friends
+        label: 友链页面
+        file: content/site/friends.json
+        format: json
+        fields:
+          - label: 头部信息
+            name: hero
+            widget: object
+            fields:
+              - { label: 眉标题, name: eyebrow, widget: string }
+              - { label: 标题, name: title, widget: string }
+              - { label: 描述, name: description, widget: text }
+          - label: 偏好卡片
+            name: preferenceCard
+            widget: object
+            fields:
+              - { label: 眉标题, name: eyebrow, widget: string }
+              - { label: 标题, name: title, widget: string }
+              - label: 条目
+                name: items
+                widget: list
+                field: { label: 条目, name: item, widget: text }
+          - label: 交换友链卡片
+            name: exchangeCard
+            widget: object
+            fields:
+              - { label: 标题, name: title, widget: string }
+              - { label: 描述, name: description, widget: text }
+              - { label: 按钮文案, name: ctaLabel, widget: string }
+              - { label: 按钮链接, name: ctaHref, widget: string }
+          - label: 友链列表
+            name: items
+            widget: list
+            summary: "{{fields.name}}"
+            fields:
+              - { label: 名称, name: name, widget: string }
+              - { label: 链接, name: url, widget: string }
+              - { label: 描述, name: description, widget: text }
+              - { label: 标签, name: tag, widget: string }
+
+      - name: projects
+        label: 项目页面
+        file: content/site/projects.json
+        format: json
+        fields:
+          - label: GitHub 资料
+            name: githubProfile
+            widget: object
+            fields:
+              - { label: GitHub 用户名, name: username, widget: string }
+              - { label: GitHub 主页链接, name: url, widget: string }
+          - label: 头部信息
+            name: hero
+            widget: object
+            fields:
+              - { label: 眉标题, name: eyebrow, widget: string }
+              - { label: 标题, name: title, widget: string }
+              - { label: 描述, name: description, widget: text }
+          - { label: 列表区标题, name: listHeading, widget: string }
+          - label: 项目列表
+            name: items
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - { label: Slug, name: slug, widget: string }
+              - { label: 标题, name: title, widget: string }
+              - label: 标签
+                name: tags
+                widget: list
+                field: { label: 标签, name: tag, widget: string }
+              - { label: 描述, name: description, widget: text }
+              - { label: 链接, name: href, widget: string }
+
+  - name: photos
+    label: 照片内容
+    files:
+      - name: albums
+        label: 相册
+        file: content/photos/albums.json
+        format: json
+        fields:
+          - label: 相册列表
+            name: items
+            widget: list
+            summary: "{{fields.name}}"
+            fields:
+              - { label: ID, name: id, widget: string }
+              - { label: 名称, name: name, widget: string }
+              - { label: 描述, name: description, widget: text }
+
+      - name: photos
+        label: 照片元数据
+        file: content/photos/photos.json
+        format: json
+        fields:
+          - label: 照片列表
+            name: items
+            widget: list
+            summary: "{{fields.alt}}"
+            fields:
+              - { label: ID, name: id, widget: string }
+              - { label: 图片 URL, name: src, widget: string }
+              - { label: 标题, name: alt, widget: string }
+              - { label: 宽度, name: width, widget: number, value_type: int }
+              - { label: 高度, name: height, widget: number, value_type: int }
+              - { label: 相册 ID, name: albumId, widget: string }
+              - { label: 日期, name: date, widget: datetime, format: "YYYY-MM-DD", time_format: false }
+              - { label: 描述, name: caption, widget: text }
+              - label: 标签
+                name: tags
+                widget: list
+                field: { label: 标签, name: tag, widget: string }
+              - { label: 分类, name: category, widget: string }
+              - { label: 首页精选, name: featured, widget: boolean, default: false }
+              - { label: 排序值, name: sortOrder, widget: number, value_type: int }

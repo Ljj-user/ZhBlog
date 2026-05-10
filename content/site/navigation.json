@@ -1,0 +1,10 @@
+{
+  "items": [
+    { "name": "首页", "href": "/" },
+    { "name": "文章", "href": "/posts" },
+    { "name": "归档", "href": "/archive" },
+    { "name": "照片", "href": "/photos" },
+    { "name": "项目", "href": "/projects" },
+    { "name": "友链", "href": "/friends" }
+  ]
+}
