@@ -14,6 +14,11 @@
       "id": "city",
       "name": "城市",
       "description": "夜色、窗口和城市的呼吸感。"
+    },
+    {
+      "id": "people",
+      "name": "人物",
+      "description": "人物、记忆"
     }
   ]
 }
