@@ -296,9 +296,9 @@ function RecentWritingSection({ posts, homeContent }: { posts: PostMeta[]; homeC
         </Link>
       </div>
 
-      <div className="mt-5 grid gap-4 lg:grid-cols-2">
-        {posts.map((post, index) => (
-          <PostPreviewCard key={post.slug} post={post} featured={index === 0} />
+      <div className="mt-5 grid gap-4">
+        {posts.map((post) => (
+          <PostPreviewCard key={post.slug} post={post} />
         ))}
       </div>
     </SurfaceCard>
@@ -379,7 +379,7 @@ export function HomePageClient({ posts, profile, homeContent, featuredPhotos }: 
 
       <div className="mx-auto max-w-[1480px] px-4 pb-12 pt-8 sm:px-6 lg:px-10 lg:pt-10">
         <div className="mx-auto max-w-[1400px]">
-          <div className="grid items-start gap-6 xl:grid-cols-[280px_minmax(0,1.62fr)_210px] 2xl:grid-cols-[300px_minmax(0,1.76fr)_230px]">
+          <div className="grid items-start gap-6 xl:grid-cols-[340px_minmax(0,1.44fr)_260px] 2xl:grid-cols-[360px_minmax(0,1.6fr)_280px]">
             <LeftColumn profile={profile} homeContent={homeContent} />
             <CenterColumn posts={posts} homeContent={homeContent} featuredPhotos={featuredPhotos} />
             <RightColumn homeContent={homeContent} />

@@ -29,6 +29,13 @@ const projectItemSchema = z.object({
   description: requiredText("Description"),
 })
 
+const experienceItemSchema = z.object({
+  period: requiredText("Period"),
+  title: requiredText("Title"),
+  org: requiredText("Organization"),
+  description: requiredText("Description"),
+})
+
 const albumItemSchema = z.object({
   id: requiredText("Album id"),
   name: requiredText("Album name"),
@@ -76,6 +83,10 @@ export const profileTagsSchema = z.object({
   profileTags: z.array(z.string().trim().min(1)).min(1, "Keep at least one home tag"),
   aboutTags: z.array(z.string().trim().min(1)).min(1, "Keep at least one about tag"),
   focusAreas: z.array(z.string().trim().min(1)).min(1, "Keep at least one focus area"),
+})
+
+export const profileExperienceSchema = z.object({
+  experience: z.array(experienceItemSchema).min(1, "Keep at least one experience item"),
 })
 
 export const homeHeroSchema = z.object({

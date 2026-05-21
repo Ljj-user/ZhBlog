@@ -39,8 +39,8 @@ export default function PostsPage() {
         </SurfaceCard>
 
         <div className="grid gap-5 xl:grid-cols-2">
-          {posts.map((post, index) => (
-            <PostPreviewCard key={post.slug} post={post} featured={index === 0} />
+          {posts.map((post) => (
+            <PostPreviewCard key={post.slug} post={post} />
           ))}
         </div>
 

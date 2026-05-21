@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache"
 import { promises as fs } from "node:fs"
 import path from "node:path"
+import matter from "gray-matter"
 import {
   albumItemsSchema,
   designMediaSchema,
@@ -17,6 +18,7 @@ import {
   playerSchema,
   profileBasicSchema,
   profileContactSchema,
+  profileExperienceSchema,
   profileTagsSchema,
   projectItemsSchema,
   projectListHeadingSchema,
@@ -27,6 +29,7 @@ import {
 } from "@/lib/admin-content-schemas"
 import { assertAdminEnabled } from "@/lib/admin-access"
 import { getFriendsContent, getHomeContent, getProjectsContent, getSiteProfile } from "@/lib/content"
+import { getPostBySlugForAdmin, getPostsDirectory } from "@/lib/posts"
 
 const profileFilePath = path.join(process.cwd(), "content", "site", "profile.json")
 const homeFilePath = path.join(process.cwd(), "content", "site", "home.json")
@@ -97,6 +100,22 @@ function parseProjectItems(value: string) {
     })
 }
 
+function parseExperienceItems(value: string) {
+  return value
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => {
+      const [period, title, org, description] = line.split("|").map((item) => item.trim())
+      return {
+        period: period ?? "",
+        title: title ?? "",
+        org: org ?? "",
+        description: description ?? "",
+      }
+    })
+}
+
 function parseAlbumItems(value: string) {
   return value
     .split(/\r?\n/)
@@ -115,6 +134,13 @@ function parseBoolean(value: string) {
 
 function parseInteger(value: string) {
   return Number.parseInt(value.trim(), 10)
+}
+
+function parseTags(value: string) {
+  return value
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean)
 }
 
 function parsePhotoItems(value: string) {
@@ -169,6 +195,45 @@ function revalidatePhotoSurfaces() {
   revalidatePath("/photos")
   revalidatePath("/admin/albums")
   revalidatePath("/admin/photos")
+}
+
+function normalizeSlug(value: string) {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9\-_\s]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+}
+
+async function ensurePostsDirectory() {
+  await fs.mkdir(getPostsDirectory(), { recursive: true })
+}
+
+async function writePostFile(input: {
+  slug: string
+  title: string
+  description: string
+  date: string
+  category: string
+  tags: string[]
+  draft: boolean
+  content: string
+}) {
+  assertAdminEnabled()
+  await ensurePostsDirectory()
+
+  const filePath = path.join(getPostsDirectory(), `${input.slug}.mdx`)
+  const fileContent = matter.stringify(input.content.trimEnd(), {
+    title: input.title,
+    description: input.description,
+    date: input.date,
+    category: input.category,
+    tags: input.tags,
+    draft: input.draft,
+  })
+
+  await fs.writeFile(filePath, `${fileContent}\n`, "utf8")
 }
 
 export async function saveProfileBasic(_: AdminActionState, formData: FormData): Promise<AdminActionState> {
@@ -230,6 +295,20 @@ export async function saveProfileTags(_: AdminActionState, formData: FormData): 
   revalidatePath("/about")
   revalidatePath("/admin/profile")
   return success("Tags saved")
+}
+
+export async function saveProfileExperience(_: AdminActionState, formData: FormData): Promise<AdminActionState> {
+  const parsed = profileExperienceSchema.safeParse({
+    experience: parseExperienceItems(String(formData.get("experience") ?? "")),
+  })
+
+  if (!parsed.success) return failure(parsed.error.issues[0]?.message ?? "Failed to save experience")
+
+  const profile = getSiteProfile()
+  await writeJsonFile(profileFilePath, { ...profile, experience: parsed.data.experience })
+  revalidatePath("/about")
+  revalidatePath("/admin/profile")
+  return success("Experience saved")
 }
 
 export async function saveHomeHero(_: AdminActionState, formData: FormData): Promise<AdminActionState> {
@@ -497,4 +576,55 @@ export async function savePhotoItems(_: AdminActionState, formData: FormData): P
   await writeJsonFile(photosFilePath, { items: parsed.data.items })
   revalidatePhotoSurfaces()
   return success("Photos saved")
+}
+
+export async function savePostDraft(_: AdminActionState, formData: FormData): Promise<AdminActionState> {
+  assertAdminEnabled()
+
+  const originalSlug = String(formData.get("originalSlug") ?? "").trim()
+  const slugInput = String(formData.get("slug") ?? "").trim()
+  const slug = normalizeSlug(slugInput)
+  const title = String(formData.get("title") ?? "").trim()
+  const description = String(formData.get("description") ?? "").trim()
+  const date = String(formData.get("date") ?? "").trim()
+  const category = String(formData.get("category") ?? "").trim()
+  const tags = parseTags(String(formData.get("tags") ?? ""))
+  const content = String(formData.get("content") ?? "")
+  const draft = String(formData.get("draft") ?? "") === "on"
+
+  if (!slug) return failure("Slug is required")
+  if (!title) return failure("Title is required")
+  if (!date) return failure("Date is required")
+  if (!category) return failure("Category is required")
+  if (!content.trim()) return failure("Content is required")
+
+  const existingPost = getPostBySlugForAdmin(slug)
+  if (existingPost && originalSlug !== slug) {
+    return failure("Slug already exists")
+  }
+
+  await writePostFile({
+    slug,
+    title,
+    description,
+    date,
+    category,
+    tags,
+    draft,
+    content,
+  })
+
+  if (originalSlug && originalSlug !== slug) {
+    const oldPath = path.join(getPostsDirectory(), `${originalSlug}.mdx`)
+    try {
+      await fs.unlink(oldPath)
+    } catch {}
+  }
+
+  revalidatePath("/posts")
+  revalidatePath(`/posts/${slug}`)
+  revalidatePath("/archive")
+  revalidatePath("/admin/posts")
+  revalidatePath(`/admin/posts/${slug}`)
+  return success("Post saved")
 }

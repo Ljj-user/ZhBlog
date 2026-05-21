@@ -2,7 +2,7 @@ import type { AdminStat } from "@/lib/admin-content"
 
 export function ContentStatsCards({ stats }: { stats: AdminStat[] }) {
   return (
-    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
       {stats.map((stat) => (
         <article
           key={stat.label}

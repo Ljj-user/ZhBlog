@@ -22,7 +22,7 @@ export function MDXContent({ content }: MDXContentProps) {
           <h3 className="mt-6 mb-3 text-xl font-semibold">{children}</h3>
         ),
         p: ({ children }) => (
-          <p className="mb-4 leading-relaxed">{children}</p>
+          <p className="mb-4 whitespace-pre-line leading-relaxed">{children}</p>
         ),
         ul: ({ children }) => (
           <ul className="mb-4 list-disc pl-6 space-y-2">{children}</ul>

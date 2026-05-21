@@ -1,6 +1,8 @@
+import Image from "next/image"
+import Link from "next/link"
 import type { Metadata } from "next"
-import { Link2, MessageCircleHeart } from "lucide-react"
-import { NoticeCard, PillLink, QuickLinkCard, SectionHeader, SurfaceCard } from "@/components/site/cards"
+import { ArrowUpRight, Link2, MessageCircleHeart } from "lucide-react"
+import { NoticeCard, PillLink, SectionHeader, SurfaceCard } from "@/components/site/cards"
 import { getFriendsContent } from "@/lib/content"
 
 export const metadata: Metadata = {
@@ -15,26 +17,46 @@ export default function FriendsPage() {
     <main className="px-4 py-8 sm:px-6 sm:py-10 lg:px-10">
       <div className="mx-auto max-w-[1400px] space-y-6">
         <SurfaceCard className="p-6 sm:p-8 lg:p-10">
-          <SectionHeader
-            eyebrow={friendsContent.hero.eyebrow}
-            title={friendsContent.hero.title}
-            description={friendsContent.hero.description}
-          />
+          <SectionHeader eyebrow={friendsContent.hero.eyebrow} title={friendsContent.hero.title} description={friendsContent.hero.description} />
         </SurfaceCard>
 
         <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="grid gap-5 md:grid-cols-2">
             {friendsContent.items.map((friend) => (
-              <SurfaceCard key={friend.name} className="p-4">
-                <QuickLinkCard
-                  label={friend.name}
-                  description={friend.description}
-                  href={friend.url}
-                  external
-                  className="h-full min-h-[210px] bg-white/70"
-                />
-                <div className="mt-3 px-1 text-xs tracking-[0.14em] text-slate-400 dark:text-slate-500">{friend.tag}</div>
-              </SurfaceCard>
+              <Link
+                key={friend.name}
+                href={friend.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block"
+              >
+                <SurfaceCard className="h-full overflow-hidden rounded-[1.9rem] border border-black/10 bg-[linear-gradient(180deg,rgba(255,251,246,0.96),rgba(247,242,235,0.92))] p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(15,23,42,0.1)] dark:border-white/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03))]">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                      {friend.avatar ? (
+                        <div className="relative h-14 w-14 overflow-hidden rounded-[1.1rem] border border-black/8 bg-white shadow-[0_10px_24px_rgba(15,23,42,0.08)] dark:border-white/10 dark:bg-white/[0.06]">
+                          <Image src={friend.avatar} alt={`${friend.name} avatar`} fill className="object-cover" />
+                        </div>
+                      ) : (
+                        <div className="flex h-14 w-14 items-center justify-center rounded-[1.1rem] border border-black/8 bg-white text-lg font-medium text-slate-500 shadow-[0_10px_24px_rgba(15,23,42,0.08)] dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300">
+                          {friend.name.slice(0, 1)}
+                        </div>
+                      )}
+
+                      <div className="min-w-0">
+                        <h2 className="text-xl font-medium tracking-[-0.03em] text-slate-800 dark:text-slate-100">{friend.name}</h2>
+                        <p className="mt-1 text-xs tracking-[0.16em] text-slate-400 dark:text-slate-500">{friend.tag}</p>
+                      </div>
+                    </div>
+
+                    <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-slate-400 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 dark:text-slate-500" />
+                  </div>
+
+                  <div className="mt-5 rounded-[1.35rem] border border-white/80 bg-white/72 px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] dark:border-white/10 dark:bg-white/[0.04]">
+                    <p className="text-sm leading-7 text-slate-600 dark:text-slate-300">{friend.description}</p>
+                  </div>
+                </SurfaceCard>
+              </Link>
             ))}
           </div>
 

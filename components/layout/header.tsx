@@ -30,9 +30,9 @@ export function Header() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "rounded-full px-4 py-2 text-[0.78rem] tracking-[0.16em] transition-all",
+                    "rounded-full border border-transparent px-4 py-2 text-[0.78rem] tracking-[0.16em] transition-all",
                     active
-                      ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900"
+                      ? "border-black/8 bg-black/5 text-slate-900 dark:border-white/10 dark:bg-white/10 dark:text-white"
                       : "text-slate-500 hover:bg-black/5 hover:text-slate-900 dark:text-white/62 dark:hover:bg-white/10 dark:hover:text-white",
                   )}
                 >
@@ -44,13 +44,6 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Link
-            href="/about"
-            className="hidden rounded-full border border-black/12 bg-white/80 px-5 py-2.5 text-[0.78rem] tracking-[0.16em] text-slate-800 transition-colors hover:bg-white sm:inline-flex dark:border-white/15 dark:bg-white/10 dark:text-white dark:hover:bg-white/16"
-          >
-            关于我
-          </Link>
-
           <ThemeToggle />
 
           <Button
@@ -75,7 +68,9 @@ export function Header() {
                 onClick={() => setMobileMenuOpen(false)}
                 className={cn(
                   "rounded-2xl px-4 py-3 text-sm transition-colors hover:bg-black/5 dark:hover:bg-white/10",
-                  pathname === item.href ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900" : "text-slate-600 dark:text-slate-300",
+                  pathname === item.href
+                    ? "border border-black/8 bg-black/5 text-slate-900 dark:border-white/10 dark:bg-white/10 dark:text-white"
+                    : "text-slate-600 dark:text-slate-300",
                 )}
               >
                 {item.name}

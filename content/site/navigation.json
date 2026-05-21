@@ -5,6 +5,7 @@
     { "name": "归档", "href": "/archive" },
     { "name": "照片", "href": "/photos" },
     { "name": "项目", "href": "/projects" },
-    { "name": "友链", "href": "/friends" }
+    { "name": "友链", "href": "/friends" },
+    { "name": "关于我", "href": "/about" }
   ]
 }

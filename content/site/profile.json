@@ -1,7 +1,7 @@
 {
   "siteTitle": "ZH_Blog",
   "name": "正豪",
-  "role": "Agent 全栈开发工程师",
+  "role": "Agent 产品经理",
   "avatar": "https://i.111666.best/image/Tddzv0tWETjSjAcJORc6fE.png",
   "coverImage": "https://i.111666.best/image/ubycSzswsLu9JWT1r9S9fG.png",
   "intro": "我更想把这里做成一个带作者气质的空间，而不只是简历或信息卡。它会展示我的项目、技术与写作，也会保留生活观察、审美偏好和长期积累的痕迹。",
@@ -24,9 +24,9 @@
     "AI learner"
   ],
   "focusAreas": [
-    "把博客做成可持续生长的个人主页，而不是一次性的展示页。",
+    "把博客做成可持续生长的个人主页。",
     "持续写技术、项目复盘和生活观察，让内容慢慢长出自己的纹理。",
-    "打磨兼具秩序感和作者气质的 Web 体验，保留表达里的温度。"
+    "打磨兼具秩序感和作者气质的 Web 体验。"
   ],
   "skillGroups": [
     {
@@ -62,7 +62,13 @@
   ],
   "experience": [
     {
-      "period": "2025 - 至今",
+      "period": "2026.1 - 2026.5",
+      "title": "RPA开发工程师",
+      "org": "互联网团队",
+      "description": "参与 Agent 产品建设，负责页面设计、交互落地与项目推进中的工程细节。"
+    },
+    {
+      "period": "2025 - 2026",
       "title": "前端开发工程师",
       "org": "互联网团队",
       "description": "参与 Web 产品建设，负责页面体验、交互落地与项目推进中的工程细节。"

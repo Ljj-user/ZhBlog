@@ -113,6 +113,7 @@ export interface HomeContent {
 export interface FriendLink {
   name: string
   url: string
+  avatar?: string
   description: string
   tag: string
 }
