@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { SectionHeader, SurfaceCard } from "@/components/site/cards"
+import { PageCanvas, SectionHeader, SurfaceCard } from "@/components/site/cards"
 import { PhotoGallery } from "@/components/photo-gallery"
 import { getPhotoAlbums, getPhotos } from "@/lib/content"
 
@@ -17,8 +17,7 @@ export default function PhotosPage() {
   }))
 
   return (
-    <main className="px-4 py-8 sm:px-6 sm:py-10 lg:px-10">
-      <div className="mx-auto max-w-[1400px] space-y-6">
+    <PageCanvas>
         <SurfaceCard className="p-6 sm:p-8 lg:p-10">
           <SectionHeader
             eyebrow="PHOTO LOGBOOK"
@@ -28,7 +27,6 @@ export default function PhotosPage() {
         </SurfaceCard>
 
         <PhotoGallery photos={photos} albums={albums} />
-      </div>
-    </main>
+    </PageCanvas>
   )
 }

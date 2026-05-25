@@ -2,7 +2,7 @@ import Link from "next/link"
 import type { Metadata } from "next"
 import { Suspense } from "react"
 import { ArrowUpRight, FolderKanban, Github } from "lucide-react"
-import { PillLink, ProjectPreviewCard, SectionHeader, SurfaceCard } from "@/components/site/cards"
+import { PageCanvas, PillLink, ProjectPreviewCard, SectionHeader, SurfaceCard } from "@/components/site/cards"
 import { getProjectsContent } from "@/lib/content"
 import {
   getContributionIntensity,
@@ -30,12 +30,12 @@ function ContributionCardSkeleton() {
 
   return (
     <SurfaceCard className="p-5 sm:p-7">
-      <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+      <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-stone-300">
         <Github className="h-4 w-4" />
         <span>GitHub Contributions</span>
       </div>
 
-      <div className="mt-5 rounded-[1.6rem] border border-black/8 bg-white/72 p-4 dark:border-white/8 dark:bg-white/[0.04] sm:p-6">
+      <div className="mt-5 rounded-[1.15rem] border border-stone-200 bg-white/62 p-4 dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
         <div className="pl-10 sm:pl-14">
           <div className="grid grid-cols-6 gap-y-2 text-[0.72rem] text-slate-400 sm:grid-cols-12 dark:text-slate-500">
             {monthLabels.map((month) => (
@@ -99,7 +99,7 @@ async function GithubContributionsCard({ username, url }: { username: string; ur
 
   return (
     <SurfaceCard className="p-5 sm:p-7">
-      <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+      <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-stone-300">
         <Github className="h-4 w-4" />
         <span>GitHub Contributions</span>
       </div>
@@ -108,7 +108,7 @@ async function GithubContributionsCard({ username, url }: { username: string; ur
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-5 block rounded-[1.6rem] border border-black/8 bg-white/72 p-4 transition-colors hover:bg-white/88 dark:border-white/8 dark:bg-white/[0.04] dark:hover:bg-white/[0.06] sm:p-6"
+        className="mt-5 block rounded-[1.15rem] border border-stone-200 bg-white/62 p-4 transition-colors hover:bg-white/88 dark:border-white/10 dark:bg-white/[0.04] dark:hover:bg-white/[0.06] sm:p-6"
       >
         <div className="pl-10 sm:pl-14">
           <div className="grid grid-cols-6 gap-y-2 text-[0.72rem] text-slate-400 sm:grid-cols-12 dark:text-slate-500">
@@ -170,8 +170,7 @@ export default function ProjectsPage() {
   const { githubProfile, hero, items: projects } = projectsContent
 
   return (
-    <main className="px-4 py-8 sm:px-6 sm:py-10 lg:px-10">
-      <div className="mx-auto max-w-[1400px] space-y-6">
+    <PageCanvas>
         <SurfaceCard className="p-6 sm:p-8 lg:p-10">
           <SectionHeader
             eyebrow={hero.eyebrow}
@@ -190,8 +189,8 @@ export default function ProjectsPage() {
           <GithubContributionsCard username={githubProfile.username} url={githubProfile.url} />
         </Suspense>
 
-        <section className="border-t border-dashed border-black/10 pt-6 dark:border-white/10">
-          <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+        <section className="border-t border-dashed border-stone-200/80 pt-6 dark:border-white/10">
+          <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-stone-300">
             <FolderKanban className="h-4 w-4" />
             <span>{projectsContent.listHeading}</span>
           </div>
@@ -202,7 +201,6 @@ export default function ProjectsPage() {
             ))}
           </div>
         </section>
-      </div>
-    </main>
+    </PageCanvas>
   )
 }

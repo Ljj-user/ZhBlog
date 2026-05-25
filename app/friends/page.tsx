@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import type { Metadata } from "next"
 import { ArrowUpRight, Link2, MessageCircleHeart } from "lucide-react"
-import { NoticeCard, PillLink, SectionHeader, SurfaceCard } from "@/components/site/cards"
+import { NoticeCard, PageCanvas, PillLink, SectionHeader, SurfaceCard } from "@/components/site/cards"
 import { getFriendsContent } from "@/lib/content"
 
 export const metadata: Metadata = {
@@ -14,8 +14,7 @@ export default function FriendsPage() {
   const friendsContent = getFriendsContent()
 
   return (
-    <main className="px-4 py-8 sm:px-6 sm:py-10 lg:px-10">
-      <div className="mx-auto max-w-[1400px] space-y-6">
+    <PageCanvas>
         <SurfaceCard className="p-6 sm:p-8 lg:p-10">
           <SectionHeader eyebrow={friendsContent.hero.eyebrow} title={friendsContent.hero.title} description={friendsContent.hero.description} />
         </SurfaceCard>
@@ -30,7 +29,7 @@ export default function FriendsPage() {
                 rel="noopener noreferrer"
                 className="group block"
               >
-                <SurfaceCard className="h-full overflow-hidden rounded-[1.9rem] border border-black/10 bg-[linear-gradient(180deg,rgba(255,251,246,0.96),rgba(247,242,235,0.92))] p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(15,23,42,0.1)] dark:border-white/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03))]">
+                <SurfaceCard className="h-full overflow-hidden rounded-[1.35rem] border-stone-200 bg-[#fbfaf6]/78 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-stone-300 hover:bg-white hover:shadow-[0_18px_44px_rgba(47,55,48,0.1)] dark:border-white/10 dark:bg-white/[0.04] dark:hover:bg-white/[0.08]">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex items-center gap-4">
                       {friend.avatar ? (
@@ -44,16 +43,16 @@ export default function FriendsPage() {
                       )}
 
                       <div className="min-w-0">
-                        <h2 className="text-xl font-medium tracking-[-0.03em] text-slate-800 dark:text-slate-100">{friend.name}</h2>
-                        <p className="mt-1 text-xs tracking-[0.16em] text-slate-400 dark:text-slate-500">{friend.tag}</p>
+                        <h2 className="text-xl font-medium tracking-[-0.03em] text-slate-900 dark:text-stone-100">{friend.name}</h2>
+                        <p className="mt-1 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-stone-400 dark:text-stone-500">{friend.tag}</p>
                       </div>
                     </div>
 
                     <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-slate-400 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 dark:text-slate-500" />
                   </div>
 
-                  <div className="mt-5 rounded-[1.35rem] border border-white/80 bg-white/72 px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] dark:border-white/10 dark:bg-white/[0.04]">
-                    <p className="text-sm leading-7 text-slate-600 dark:text-slate-300">{friend.description}</p>
+                  <div className="mt-5 rounded-[1rem] border border-stone-200/70 bg-white/62 px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] dark:border-white/10 dark:bg-white/[0.04]">
+                    <p className="text-sm leading-7 text-slate-600 dark:text-stone-300">{friend.description}</p>
                   </div>
                 </SurfaceCard>
               </Link>
@@ -81,7 +80,6 @@ export default function FriendsPage() {
             </SurfaceCard>
           </div>
         </section>
-      </div>
-    </main>
+    </PageCanvas>
   )
 }

@@ -37,7 +37,7 @@
     {
       "id": "3",
       "src": "https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=1000&h=1400&fit=crop",
-      "alt": "上午",
+      "alt": "加州酋长岩",
       "width": 1000,
       "height": 1400,
       "albumId": "nature",
@@ -154,6 +154,22 @@
       "sortOrder": 9
     },
     {
+      "id": "photo-18",
+      "src": "https://i.111666.best/image/hFJShJsb2l2BMmM5KcBlVN.jpg",
+      "alt": "USJ",
+      "width": 1000,
+      "height": 1400,
+      "albumId": "trave",
+      "date": "2025-01-19",
+      "caption": "超级任天堂世界",
+      "tags": [
+        "马里奥USJ"
+      ],
+      "category": "旅行",
+      "featured": true,
+      "sortOrder": 10
+    },
+    {
       "id": "11",
       "src": "https://i.111666.best/image/f1nh8P7zoQFsFG97u830QA.jpg",
       "alt": "京都电视台",
@@ -237,7 +253,7 @@
     {
       "id": "16",
       "src": "https://i.111666.best/image/TtirEQjyizi46lYwZEAuPo.jpg",
-      "alt": "Zh",
+      "alt": "这是小帅",
       "width": 1000,
       "height": 1400,
       "albumId": "people",
@@ -265,22 +281,6 @@
       "category": "人物",
       "featured": true,
       "sortOrder": 17
-    },
-    {
-      "id": "photo-18",
-      "src": "https://i.111666.best/image/hFJShJsb2l2BMmM5KcBlVN.jpg",
-      "alt": "USJ",
-      "width": 1000,
-      "height": 1400,
-      "albumId": "trave",
-      "date": "2025-01-19",
-      "caption": "超级任天堂世界",
-      "tags": [
-        "马里奥USJ"
-      ],
-      "category": "旅行",
-      "featured": true,
-      "sortOrder": 10
     }
   ]
 }

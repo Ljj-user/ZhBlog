@@ -15,9 +15,9 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 px-4 pt-4 sm:px-6 lg:px-10">
-      <nav className="mx-auto flex max-w-[1400px] items-center justify-between rounded-[1.9rem] border border-black/10 bg-white/76 px-4 py-3 shadow-[0_18px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl dark:border-white/10 dark:bg-black/24 sm:px-5">
+      <nav className="mx-auto flex max-w-[1400px] items-center justify-between rounded-[1.35rem] border border-stone-200/80 bg-[#fbfaf6]/84 px-4 py-3 shadow-[0_14px_38px_rgba(47,55,48,0.1)] backdrop-blur-xl dark:border-white/10 dark:bg-[#141816]/82 sm:px-5">
         <div className="flex items-center gap-4 lg:gap-6">
-          <Link href="/" className="font-display text-2xl leading-none tracking-[0.04em] text-slate-900 dark:text-white">
+          <Link href="/" className="font-display text-2xl leading-none tracking-[0.04em] text-slate-900 dark:text-stone-100">
             ZH_Blog
           </Link>
 
@@ -32,8 +32,8 @@ export function Header() {
                   className={cn(
                     "rounded-full border border-transparent px-4 py-2 text-[0.78rem] tracking-[0.16em] transition-all",
                     active
-                      ? "border-black/8 bg-black/5 text-slate-900 dark:border-white/10 dark:bg-white/10 dark:text-white"
-                      : "text-slate-500 hover:bg-black/5 hover:text-slate-900 dark:text-white/62 dark:hover:bg-white/10 dark:hover:text-white",
+                      ? "border-stone-200 bg-white/72 text-slate-900 shadow-sm dark:border-white/10 dark:bg-white/10 dark:text-white"
+                      : "text-stone-500 hover:bg-white/58 hover:text-slate-900 dark:text-white/62 dark:hover:bg-white/10 dark:hover:text-white",
                   )}
                 >
                   {item.name}
@@ -59,7 +59,7 @@ export function Header() {
       </nav>
 
       {mobileMenuOpen ? (
-        <div className="mx-auto mt-3 max-w-[1400px] rounded-[1.7rem] border border-black/10 bg-white/88 px-4 py-3 shadow-[0_18px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl dark:border-white/10 dark:bg-black/70 md:hidden">
+        <div className="mx-auto mt-3 max-w-[1400px] rounded-[1.25rem] border border-stone-200/80 bg-[#fbfaf6]/90 px-4 py-3 shadow-[0_18px_45px_rgba(47,55,48,0.1)] backdrop-blur-xl dark:border-white/10 dark:bg-[#141816]/92 md:hidden">
           <div className="grid gap-2">
             {navigationItems.map((item) => (
               <Link
@@ -69,8 +69,8 @@ export function Header() {
                 className={cn(
                   "rounded-2xl px-4 py-3 text-sm transition-colors hover:bg-black/5 dark:hover:bg-white/10",
                   pathname === item.href
-                    ? "border border-black/8 bg-black/5 text-slate-900 dark:border-white/10 dark:bg-white/10 dark:text-white"
-                    : "text-slate-600 dark:text-slate-300",
+                    ? "border border-stone-200 bg-white/72 text-slate-900 dark:border-white/10 dark:bg-white/10 dark:text-white"
+                    : "text-stone-600 dark:text-stone-300",
                 )}
               >
                 {item.name}

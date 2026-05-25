@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowUpRight, BriefcaseBusiness, GraduationCap, Mail, MapPin } from "lucide-react"
-import { NoticeCard, PillLink, SectionHeader, SurfaceCard } from "@/components/site/cards"
+import { NoticeCard, PageCanvas, PillLink, SectionHeader, SurfaceCard } from "@/components/site/cards"
 import { getSiteProfile, getSocialItems } from "@/lib/content"
 
 export const metadata = {
@@ -14,7 +14,7 @@ export default function AboutPage() {
   const socialItems = getSocialItems()
 
   return (
-    <main className="mx-auto max-w-[1400px] px-4 py-8 sm:px-6 lg:px-10">
+    <PageCanvas>
       <SurfaceCard className="p-6 sm:p-8 lg:p-10">
         <div className="grid gap-8 lg:grid-cols-[120px_minmax(0,1fr)_320px] lg:items-start">
           <div className="flex flex-col items-start gap-4">
@@ -56,6 +56,10 @@ export default function AboutPage() {
               <p className="text-lg leading-9 text-black/72 dark:text-white/68">{profile.intro}</p>
               <p className="text-base leading-8 text-black/58 dark:text-white/58">{profile.summary}</p>
             </div>
+
+            <p className="mt-7 inline-flex rounded-full border border-stone-200 bg-white/62 px-4 py-2 font-mono text-[0.68rem] tracking-[0.2em] text-stone-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-stone-400">
+              君子应有龙蛇之变
+            </p>
           </div>
 
           <NoticeCard eyebrow="Now" title="当前关注" items={profile.focusAreas} iconName="sparkles" className="p-0 shadow-none" />
@@ -153,6 +157,6 @@ export default function AboutPage() {
           </SurfaceCard>
         </div>
       </section>
-    </main>
+    </PageCanvas>
   )
 }

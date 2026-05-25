@@ -19,6 +19,26 @@ export interface Post extends PostMeta {
 
 const postsDirectory = path.join(process.cwd(), "content", "posts")
 
+function normalizeDate(value: unknown): string {
+  if (!value) {
+    return new Date().toISOString().split("T")[0]
+  }
+
+  const date = value instanceof Date ? value : new Date(String(value))
+  if (!Number.isNaN(date.getTime())) {
+    return date.toISOString().split("T")[0]
+  }
+
+  if (typeof value === "string") {
+    const match = value.match(/(\d{4})-(\d{2})-(\d{2})/)
+    if (match) {
+      return `${match[1]}-${match[2]}-${match[3]}`
+    }
+  }
+
+  return new Date().toISOString().split("T")[0]
+}
+
 function parsePostFile(fileName: string): PostMeta {
   const slug = fileName.replace(/\.mdx?$/, "")
   const fullPath = path.join(postsDirectory, fileName)
@@ -29,7 +49,7 @@ function parsePostFile(fileName: string): PostMeta {
     slug,
     title: data.title || slug,
     description: data.description || "",
-    date: data.date || new Date().toISOString().split("T")[0],
+    date: normalizeDate(data.date),
     category: data.category || "未分类",
     tags: Array.isArray(data.tags) ? data.tags : [],
     coverImage: data.coverImage,

@@ -1,5 +1,5 @@
 import { HomePageClient } from "../components/home-page-client"
-import { getFeaturedPhotos, getHomeContent, getSiteProfile } from "@/lib/content"
+import { getFeaturedPhotos, getHomeContent, getSiteProfile, getSocialItems } from "@/lib/content"
 import { getAllPosts } from "@/lib/posts"
 
 export default function HomePage() {
@@ -7,6 +7,15 @@ export default function HomePage() {
   const profile = getSiteProfile()
   const homeContent = getHomeContent()
   const featuredPhotos = getFeaturedPhotos(10)
+  const socialItems = getSocialItems()
 
-  return <HomePageClient posts={posts} profile={profile} homeContent={homeContent} featuredPhotos={featuredPhotos} />
+  return (
+    <HomePageClient
+      posts={posts}
+      profile={profile}
+      homeContent={homeContent}
+      featuredPhotos={featuredPhotos}
+      socialItems={socialItems}
+    />
+  )
 }
