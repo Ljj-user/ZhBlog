@@ -1,0 +1,8 @@
+{
+  "vaultPath": "D:/path/to/your/ObsidianVault",
+  "notesDir": "Blog/Published",
+  "attachmentsDir": "Blog/Assets",
+  "postOutputDir": "content/posts",
+  "imageOutputDir": "public/images/posts",
+  "cleanImages": true
+}

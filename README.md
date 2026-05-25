@@ -56,4 +56,46 @@ npm run dev
 npm run build
 npm run start
 npm run lint
+npm run sync:obsidian
+npm run publish
 ```
+
+## Obsidian Sync
+
+This project includes a local-only Obsidian publishing sync.
+
+Setup:
+
+1. Copy `obsidian-sync.config.example.json` to `obsidian-sync.config.json`
+2. Update `vaultPath`, `notesDir`, and `attachmentsDir`
+3. Add `publish: true` to the notes you want to publish
+4. Run `npm run sync:obsidian`
+
+Shortcut:
+
+- `npm run publish`
+
+Recommended frontmatter:
+
+```md
+---
+title: My Post
+slug: my-post
+description: Short summary
+date: 2026-05-22
+category: Notes
+tags:
+  - Obsidian
+  - Blog
+publish: true
+draft: false
+---
+```
+
+Current sync behavior:
+
+- Reads `.md` and `.mdx` files under your configured `notesDir`
+- Publishes only notes with `publish: true`
+- Outputs blog posts into `content/posts`
+- Copies Obsidian embed images like `![[image.png]]` into `public/images/posts/<slug>/`
+- Converts wiki links like `[[note-name]]` to blog post links when the target note is also published
