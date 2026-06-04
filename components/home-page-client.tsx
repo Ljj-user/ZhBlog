@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRef, useState } from "react"
 import { ArrowRight, AtSign, Compass, Github, Link2, MapPin, Music2, Network, NotebookPen, Sparkles } from "lucide-react"
-import { PolaroidPhotoCard, PostPreviewCard, QuickLinkCard, SurfaceCard } from "@/components/site/cards"
+import { NoticeCard, PostPreviewCard, QuickLinkCard, SurfaceCard } from "@/components/site/cards"
 import type { HomeContent, SiteProfile, SocialLink } from "@/lib/content"
 import type { PostMeta } from "@/lib/posts"
 
@@ -73,12 +73,8 @@ function ProfileSidebar({ profile }: { profile: SiteProfile }) {
         </div>
 
         <div className="mt-4 grid gap-2">
-          <QuickLinkCard label="关于我" description="作者介绍、经历和正在关注的事。" href="/about" />
-          <QuickLinkCard
-            label={profile.homeSidebarEmailLabel}
-            description={profile.homeSidebarEmailDescription}
-            href={`mailto:${profile.email}`}
-          />
+          <QuickLinkCard label="About me" description="Author profile, background, and current focus." href="/about" />
+          <QuickLinkCard label={profile.homeSidebarEmailLabel} description={profile.homeSidebarEmailDescription} href={`mailto:${profile.email}`} />
         </div>
       </div>
     </SurfaceCard>
@@ -106,9 +102,7 @@ function HomeHero({
       <div className="relative mx-auto max-w-[1480px] px-4 pb-14 pt-16 sm:px-6 lg:px-10 lg:pb-18 lg:pt-20">
         <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,1fr)_420px] xl:grid-cols-[minmax(0,1fr)_460px]">
           <div className="max-w-4xl">
-            <p className="font-mono text-[0.72rem] uppercase tracking-[0.28em] text-stone-400 dark:text-stone-500">
-              {homeContent.hero.eyebrow}
-            </p>
+            <p className="font-mono text-[0.72rem] uppercase tracking-[0.28em] text-stone-400 dark:text-stone-500">{homeContent.hero.eyebrow}</p>
 
             <h2 className="mt-7 max-w-5xl font-display text-5xl leading-[1.06] text-slate-950 sm:text-6xl lg:text-[5.8rem] lg:leading-[1.02] dark:text-stone-50">
               {homeContent.hero.titleLine1}
@@ -123,23 +117,23 @@ function HomeHero({
                 href="/posts"
                 className="inline-flex items-center gap-2 rounded-full bg-[#17211d] px-6 py-3 text-sm text-white shadow-[0_12px_28px_rgba(23,33,29,0.18)] transition-transform hover:-translate-y-0.5 dark:bg-stone-50 dark:text-[#17211d]"
               >
-                去看文章
+                Read posts
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/archive"
                 className="inline-flex items-center gap-2 rounded-full border border-stone-300/80 bg-white/72 px-6 py-3 text-sm text-slate-700 transition-colors hover:bg-white dark:border-white/10 dark:bg-white/[0.06] dark:text-stone-200 dark:hover:bg-white/[0.1]"
               >
-                打开归档
+                Open archive
                 <Compass className="h-4 w-4" />
               </Link>
             </div>
 
             <div className="mt-14 flex max-w-2xl flex-wrap gap-x-10 gap-y-5 border-t border-stone-200/80 pt-5 text-sm text-slate-500 dark:border-white/10 dark:text-stone-400">
               {[
-                ["创作标签", String(profile.profileTags.length)],
-                ["精选照片", String(featuredPhotos.length)],
-                ["持续更新", "2026"],
+                ["Creative tags", String(profile.profileTags.length)],
+                ["Featured photos", String(featuredPhotos.length)],
+                ["Updated through", "2026"],
               ].map(([label, value]) => (
                 <div key={label}>
                   <p className="font-display text-2xl text-slate-900 dark:text-stone-100">{value}</p>
@@ -169,7 +163,7 @@ function HomeHero({
             </div>
 
             <div className="absolute bottom-10 left-4 flex items-end gap-2">
-              {previewPhotos.map((photo, index) => (
+              {previewPhotos.map((photo) => (
                 <Link
                   key={photo.id}
                   href="/photos"
@@ -200,10 +194,7 @@ function DesignMediaCard({ homeContent, socialItems }: { homeContent: HomeConten
 
   return (
     <SurfaceCard className="relative h-[11.75rem] overflow-hidden p-0">
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url('${homeContent.designMedia.backgroundImage}')` }}
-      />
+      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url('${homeContent.designMedia.backgroundImage}')` }} />
       <div className="absolute inset-0 bg-[#fbfaf6]/46 backdrop-blur-[1.25px] dark:bg-[#141816]/62" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_20%,rgba(255,255,255,0.74),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.54))] dark:bg-[radial-gradient(circle_at_20%_18%,rgba(255,255,255,0.12),transparent_30%),linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.28))]" />
       <div className="absolute inset-x-4 top-4 flex items-center justify-between">
@@ -236,129 +227,6 @@ function DesignMediaCard({ homeContent, socialItems }: { homeContent: HomeConten
               </Link>
             )
           })}
-        </div>
-      </div>
-    </SurfaceCard>
-  )
-}
-
-function PhotoGallerySection({
-  homeContent,
-  featuredPhotos,
-}: {
-  homeContent: HomeContent
-  featuredPhotos: FeaturedPhotoCard[]
-}) {
-  const stripRef = useRef<HTMLDivElement | null>(null)
-  const dragStateRef = useRef({ isDragging: false, startX: 0, scrollLeft: 0, moved: false })
-  const [isDraggingStrip, setIsDraggingStrip] = useState(false)
-
-  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
-    const container = stripRef.current
-    if (!container || event.button !== 0) return
-
-    dragStateRef.current = {
-      isDragging: true,
-      startX: event.clientX,
-      scrollLeft: container.scrollLeft,
-      moved: false,
-    }
-    setIsDraggingStrip(false)
-    container.setPointerCapture(event.pointerId)
-  }
-
-  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    const container = stripRef.current
-    const dragState = dragStateRef.current
-    if (!container || !dragState.isDragging) return
-
-    const deltaX = event.clientX - dragState.startX
-    if (!dragState.moved && Math.abs(deltaX) > 6) {
-      dragState.moved = true
-      setIsDraggingStrip(true)
-    }
-
-    container.scrollLeft = dragState.scrollLeft - deltaX
-  }
-
-  const endDrag = (pointerId?: number) => {
-    const container = stripRef.current
-    if (container && pointerId !== undefined && container.hasPointerCapture(pointerId)) {
-      container.releasePointerCapture(pointerId)
-    }
-
-    dragStateRef.current.isDragging = false
-    window.setTimeout(() => setIsDraggingStrip(false), 40)
-  }
-
-  const handleCardClickCapture = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    if (dragStateRef.current.moved) event.preventDefault()
-  }
-
-  return (
-    <SurfaceCard className="rounded-[2.2rem] p-5 sm:p-6 lg:p-7">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <p className="text-[0.7rem] tracking-[0.28em] text-slate-400 dark:text-slate-500">{homeContent.photoStrip.eyebrow}</p>
-          <h3 className="mt-2 text-2xl font-medium text-slate-800 dark:text-slate-100">{homeContent.photoStrip.title}</h3>
-        </div>
-        <Link href="/photos" className="text-sm text-slate-500 transition-colors hover:text-slate-800 dark:text-slate-400 dark:hover:text-white">
-          查看全部
-        </Link>
-      </div>
-
-      <div className="mt-5">
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          <div className="rounded-full border border-slate-200 bg-white/90 px-4 py-1.5 text-[0.68rem] tracking-[0.24em] text-slate-500 shadow-[0_10px_24px_rgba(15,23,42,0.06)] dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300">
-            {homeContent.photoStrip.badge}
-          </div>
-          <p className="hidden text-sm text-slate-400 dark:text-slate-500 lg:block">{homeContent.photoStrip.description}</p>
-        </div>
-
-        <div
-          ref={stripRef}
-          className={`overflow-x-auto pb-4 pt-5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${isDraggingStrip ? "cursor-grabbing select-none" : "cursor-grab"}`}
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={(event) => endDrag(event.pointerId)}
-          onPointerCancel={(event) => endDrag(event.pointerId)}
-          onPointerLeave={() => endDrag()}
-        >
-          <div className="flex min-w-max items-start gap-4 pr-3 xl:gap-5 xl:pr-5">
-            <Link
-              href="/photos"
-              onClickCapture={handleCardClickCapture}
-              className="group order-last block w-[10.4rem] flex-none rounded-[1.25rem] border border-dashed border-slate-200 bg-[linear-gradient(135deg,rgba(255,246,236,0.95),rgba(240,246,248,0.95))] p-4 shadow-[0_18px_36px_rgba(31,41,55,0.08)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_48px_rgba(31,41,55,0.12)] dark:border-white/10 dark:bg-[linear-gradient(135deg,rgba(109,82,63,0.12),rgba(64,90,103,0.14))] lg:mt-6 xl:w-[10.9rem]"
-            >
-              <div className="flex h-full min-h-[286px] flex-col justify-between rounded-[0.95rem] border border-white/60 bg-white/70 p-[1.125rem] dark:border-white/10 dark:bg-white/[0.05] lg:min-h-[312px]">
-                <div>
-                  <p className="text-[0.65rem] tracking-[0.24em] text-slate-400 dark:text-slate-500">COVER FRAME</p>
-                  <h4 className="mt-3 text-[1.45rem] font-medium leading-tight text-slate-800 dark:text-slate-100 lg:text-[1.6rem]">
-                    {homeContent.photoStrip.coverTitleLine1}
-                    <br />
-                    {homeContent.photoStrip.coverTitleLine2}
-                  </h4>
-                  <p className="mt-3 text-[0.82rem] leading-6 text-slate-500 dark:text-slate-400">{homeContent.photoStrip.coverDescription}</p>
-                </div>
-                <div className="flex items-center justify-between border-t border-dashed border-slate-200 pt-3.5 text-[0.68rem] text-slate-400 dark:border-white/10 dark:text-slate-500">
-                  <span>Open Album</span>
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </div>
-              </div>
-            </Link>
-
-            {featuredPhotos.map((photo, index) => (
-              <PolaroidPhotoCard
-                key={photo.id}
-                title={photo.alt}
-                note={`${photo.category} / ${photo.albumName}`}
-                image={photo.src}
-                href="/photos"
-                index={index}
-                onClickCapture={handleCardClickCapture}
-              />
-            ))}
-          </div>
         </div>
       </div>
     </SurfaceCard>
@@ -431,6 +299,7 @@ function PhotoGallerySectionCanvas({
             <div className="min-w-0">
               <p className="font-mono text-[0.68rem] uppercase tracking-[0.22em] text-stone-400 dark:text-stone-500">{homeContent.photoStrip.eyebrow}</p>
               <h3 className="mt-1 truncate text-xl font-medium tracking-[-0.03em] text-slate-900 dark:text-stone-100">{homeContent.photoStrip.title}</h3>
+              <p className="mt-1 text-xs text-stone-400 dark:text-stone-500">Drag horizontally to browse the strip.</p>
             </div>
           </div>
 
@@ -438,7 +307,7 @@ function PhotoGallerySectionCanvas({
             href="/photos"
             className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white/78 px-3.5 py-2 text-sm text-slate-600 transition hover:bg-white dark:border-white/10 dark:bg-white/[0.05] dark:text-stone-300 dark:hover:bg-white/[0.09]"
           >
-            查看全部
+            See all
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
@@ -467,9 +336,7 @@ function PhotoGallerySectionCanvas({
               className="group flex w-[13rem] flex-none flex-col justify-between rounded-[1.15rem] border border-dashed border-stone-300 bg-white/72 p-4 transition hover:-translate-y-0.5 hover:bg-white dark:border-white/10 dark:bg-white/[0.04] dark:hover:bg-white/[0.08]"
             >
               <div>
-                <p className="font-mono text-[0.65rem] uppercase tracking-[0.22em] text-stone-400 dark:text-stone-500">
-                  {homeContent.photoStrip.badge}
-                </p>
+                <p className="font-mono text-[0.65rem] uppercase tracking-[0.22em] text-stone-400 dark:text-stone-500">{homeContent.photoStrip.badge}</p>
                 <h4 className="mt-4 text-2xl font-medium leading-tight tracking-[-0.04em] text-slate-900 dark:text-stone-100">
                   {homeContent.photoStrip.coverTitleLine1}
                   <br />
@@ -477,7 +344,7 @@ function PhotoGallerySectionCanvas({
                 </h4>
               </div>
               <div className="mt-10 flex items-center justify-between border-t border-stone-200 pt-3 text-sm text-slate-500 dark:border-white/10 dark:text-stone-400">
-                <span>Open Album</span>
+                <span>Open album</span>
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </div>
             </Link>
@@ -491,13 +358,7 @@ function PhotoGallerySectionCanvas({
               >
                 <div className="relative overflow-hidden rounded-[0.85rem] bg-stone-100 dark:bg-stone-900">
                   <div className="relative aspect-[4/5]">
-                    <Image
-                      src={photo.src}
-                      alt={photo.alt}
-                      fill
-                      draggable={false}
-                      className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                    />
+                    <Image src={photo.src} alt={photo.alt} fill draggable={false} className="object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
                   </div>
                 </div>
                 <div className="px-1 pb-1 pt-3">
@@ -542,36 +403,12 @@ function RecentWritingSection({ posts, homeContent }: { posts: PostMeta[]; homeC
   )
 }
 
-function NowSidebarCard({ homeContent }: { homeContent: HomeContent }) {
-  return (
-    <SurfaceCard className="relative overflow-hidden p-0">
-      <div className="border-b border-stone-200/70 px-4 py-3.5 dark:border-white/10">
-        <div className="flex items-center gap-2 font-mono text-[0.64rem] uppercase tracking-[0.18em] text-stone-500 dark:text-stone-400">
-          <Sparkles className="h-4 w-4" />
-          <span>{homeContent.nowCard.eyebrow}</span>
-        </div>
-        <h3 className="mt-2 text-lg font-medium tracking-[-0.03em] text-slate-900 dark:text-stone-100">{homeContent.nowCard.title}</h3>
-      </div>
-      <div className="grid gap-0">
-        {homeContent.nowCard.items.map((item, index) => (
-          <div key={item} className="flex gap-3 border-b border-stone-200/60 px-4 py-3.5 last:border-b-0 dark:border-white/10">
-            <span className="mt-1 h-5 w-5 shrink-0 rounded-full border border-stone-200 bg-white/72 text-center font-mono text-[0.58rem] leading-5 text-stone-400 dark:border-white/10 dark:bg-white/[0.04] dark:text-stone-500">
-              {String(index + 1).padStart(2, "0")}
-            </span>
-            <p className="text-sm leading-6 text-slate-500 dark:text-stone-400">{item}</p>
-          </div>
-        ))}
-      </div>
-    </SurfaceCard>
-  )
-}
-
 function LeftColumn({ profile, homeContent, socialItems }: { profile: SiteProfile; homeContent: HomeContent; socialItems: SocialLink[] }) {
   return (
     <aside className="space-y-5 xl:sticky xl:top-28 xl:self-start">
       <ProfileSidebar profile={profile} />
       <DesignMediaCard homeContent={homeContent} socialItems={socialItems} />
-      <NowSidebarCard homeContent={homeContent} />
+      <NoticeCard eyebrow={homeContent.nowCard.eyebrow} title={homeContent.nowCard.title} items={homeContent.nowCard.items} iconName="sparkles" />
     </aside>
   )
 }

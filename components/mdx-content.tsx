@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 
@@ -79,13 +80,22 @@ export function MDXContent({ content }: MDXContentProps) {
             {children}
           </a>
         ),
-        img: ({ src, alt }) => (
-          <img
-            src={src}
-            alt={alt || ""}
-            className="my-4 rounded-lg"
-          />
-        ),
+        img: ({ src, alt }) => {
+          if (!src) return null
+
+          return (
+            <span className="my-4 block overflow-hidden rounded-lg">
+              <Image
+                src={src}
+                alt={alt || ""}
+                width={1200}
+                height={720}
+                unoptimized
+                className="h-auto w-full rounded-lg"
+              />
+            </span>
+          )
+        },
         hr: () => <hr className="my-8 border-border" />,
       }}
     >

@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "agent:summary": "node scripts/multi-agent/summarize-reports.mjs",
     "sync:obsidian": "node scripts/sync-obsidian.mjs",
     "publish": "node scripts/sync-obsidian.mjs"
   },
