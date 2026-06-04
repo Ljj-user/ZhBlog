@@ -4,8 +4,8 @@ import { PhotoGallery } from "@/components/photo-gallery"
 import { getPhotoAlbums, getPhotos } from "@/lib/content"
 
 export const metadata: Metadata = {
-  title: "照片",
-  description: "记录生活里的光线、路途、风景与碎片时刻。",
+  title: "Photos",
+  description: "A polaroid-like photo log with quieter details and a more tactile lightbox.",
 }
 
 export default function PhotosPage() {
@@ -18,15 +18,15 @@ export default function PhotosPage() {
 
   return (
     <PageCanvas>
-        <SurfaceCard className="p-6 sm:p-8 lg:p-10">
-          <SectionHeader
-            eyebrow="PHOTO LOGBOOK"
-            title="照片"
-            description="记录一些风景、路途和日常碎片。比起整齐图库，我更想让这里像一本被翻阅过的拍立得相册。"
-          />
-        </SurfaceCard>
+      <SurfaceCard className="p-6 sm:p-8 lg:p-10">
+        <SectionHeader
+          eyebrow="PHOTO LOGBOOK"
+          title="Photos"
+          description="More than a clean gallery, this page should feel like a stack of polaroids someone has actually touched, moved around, and looked through more than once."
+        />
+      </SurfaceCard>
 
-        <PhotoGallery photos={photos} albums={albums} />
+      <PhotoGallery photos={photos} albums={albums} />
     </PageCanvas>
   )
 }

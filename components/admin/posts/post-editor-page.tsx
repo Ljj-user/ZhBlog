@@ -113,6 +113,17 @@ export function PostEditorPage({
           </div>
 
           <label className="mt-4 block space-y-2 text-sm text-slate-600 dark:text-slate-300">
+            <span>AI 导读金句</span>
+            <textarea
+              name="aiQuote"
+              defaultValue={post?.aiQuote ?? ""}
+              rows={2}
+              placeholder="一句话微醺 / 暴击，用来提前给读者一个阅读抓手。"
+              className="w-full rounded-xl border border-black/10 bg-white px-3 py-2.5 dark:border-white/10 dark:bg-white/[0.05]"
+            />
+          </label>
+
+          <label className="mt-4 block space-y-2 text-sm text-slate-600 dark:text-slate-300">
             <span>标签</span>
             <input
               name="tags"

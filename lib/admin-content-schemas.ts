@@ -27,6 +27,11 @@ const projectItemSchema = z.object({
   href: requiredText("Href"),
   tags: z.array(z.string().trim().min(1)).min(1, "Keep at least one tag"),
   description: requiredText("Description"),
+  featured: z.boolean(),
+  pain: requiredText("Pain"),
+  result: requiredText("Result"),
+  lesson: requiredText("Lesson"),
+  developmentVibe: requiredText("Development vibe"),
 })
 
 const experienceItemSchema = z.object({
@@ -53,8 +58,14 @@ const photoItemSchema = z.object({
   caption: requiredText("Caption"),
   tags: z.array(z.string().trim().min(1)).min(1, "Keep at least one tag"),
   category: requiredText("Category"),
+  location: z.string().trim().optional(),
   featured: z.boolean(),
   sortOrder: z.number().int().nonnegative("Sort order must be 0 or greater"),
+  exifCamera: z.string().trim().optional(),
+  exifFocalLength: z.string().trim().optional(),
+  exifAperture: z.string().trim().optional(),
+  exifShutterSpeed: z.string().trim().optional(),
+  exifIso: z.string().trim().optional(),
 })
 
 export const profileBasicSchema = z.object({
@@ -100,6 +111,13 @@ export const noticeCardSchema = z.object({
   eyebrow: requiredText("Card eyebrow"),
   title: requiredText("Card title"),
   items: z.array(z.string().trim().min(1)).min(1, "Keep at least one item"),
+})
+
+export const nowCardSchema = z.object({
+  eyebrow: requiredText("Card eyebrow"),
+  title: requiredText("Card title"),
+  items: z.array(z.string().trim().min(1)).min(1, "Keep at least one item"),
+  updatedAt: z.string().trim().min(1, "Updated date is required"),
 })
 
 export const designMediaSchema = z.object({

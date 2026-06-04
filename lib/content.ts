@@ -70,6 +70,7 @@ export interface NoticeContent {
   eyebrow: string
   title: string
   items: string[]
+  updatedAt?: string
 }
 
 export interface HomePhotoStripContent {
@@ -140,6 +141,11 @@ export interface ProjectItem {
   tags: string[]
   description: string
   href: string
+  featured: boolean
+  pain: string
+  result: string
+  lesson: string
+  developmentVibe: string
 }
 
 export interface ProjectsContent {
@@ -173,8 +179,14 @@ export interface PhotoItem {
   caption: string
   tags: string[]
   category: string
+  location?: string
   featured: boolean
   sortOrder: number
+  exifCamera?: string
+  exifFocalLength?: string
+  exifAperture?: string
+  exifShutterSpeed?: string
+  exifIso?: string
 }
 
 export function getNavigationItems(): NavigationItem[] {

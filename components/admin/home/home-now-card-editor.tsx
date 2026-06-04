@@ -26,6 +26,15 @@ export function HomeNowCardEditor({ home }: { home: HomeContent }) {
           </label>
         </div>
         <label className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
+          <span>更新时间</span>
+          <input
+            name="updatedAt"
+            defaultValue={home.nowCard.updatedAt ?? ""}
+            placeholder="2026-06-04"
+            className="w-full rounded-xl border border-black/10 bg-white px-3 py-2.5 dark:border-white/10 dark:bg-white/[0.05]"
+          />
+        </label>
+        <label className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
           <span>条目列表</span>
           <textarea name="items" defaultValue={home.nowCard.items.join("\n")} rows={7} className="w-full rounded-xl border border-black/10 bg-white px-3 py-2.5 dark:border-white/10 dark:bg-white/[0.05]" />
         </label>

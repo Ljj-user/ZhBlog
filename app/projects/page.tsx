@@ -2,7 +2,8 @@ import Link from "next/link"
 import type { Metadata } from "next"
 import { Suspense } from "react"
 import { ArrowUpRight, FolderKanban, Github } from "lucide-react"
-import { PageCanvas, PillLink, ProjectPreviewCard, SectionHeader, SurfaceCard } from "@/components/site/cards"
+import { ProjectBentoCard } from "@/components/projects/project-bento-card"
+import { PageCanvas, PillLink, SectionHeader, SurfaceCard } from "@/components/site/cards"
 import { getProjectsContent } from "@/lib/content"
 import {
   getContributionIntensity,
@@ -11,8 +12,8 @@ import {
 } from "@/lib/github-contributions"
 
 export const metadata: Metadata = {
-  title: "项目",
-  description: "项目与工具集合页，展示近期作品和持续实践。",
+  title: "Projects",
+  description: "A portfolio page for recent builds, lessons, and ongoing experiments.",
 }
 
 export const revalidate = 3600
@@ -71,9 +72,9 @@ function ContributionCardSkeleton() {
         </div>
 
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400 dark:text-slate-500">
-          <span>正在加载 GitHub 贡献记录...</span>
+          <span>Loading GitHub contribution data...</span>
           <span className="inline-flex items-center gap-1">
-            查看 GitHub 记录
+            Open GitHub
             <ArrowUpRight className="h-3.5 w-3.5" />
           </span>
         </div>
@@ -152,11 +153,11 @@ async function GithubContributionsCard({ username, url }: { username: string; ur
 
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400 dark:text-slate-500">
           <span>
-            近一年共 {contributionCalendar.totalContributions} 次贡献
-            {usingFallback ? "，当前显示的是占位数据，配置 token 后会切换为真实记录。" : ""}
+            {`Total in the last year: ${contributionCalendar.totalContributions}`}
+            {usingFallback ? " (placeholder data until a token is configured)" : ""}
           </span>
           <span className="inline-flex items-center gap-1">
-            查看 GitHub 记录
+            Open GitHub
             <ArrowUpRight className="h-3.5 w-3.5" />
           </span>
         </div>
@@ -171,36 +172,36 @@ export default function ProjectsPage() {
 
   return (
     <PageCanvas>
-        <SurfaceCard className="p-6 sm:p-8 lg:p-10">
-          <SectionHeader
-            eyebrow={hero.eyebrow}
-            title={hero.title}
-            description={hero.description}
-            action={
-              <PillLink href={githubProfile.url} external>
-                <Github className="h-4 w-4" />
-                @{githubProfile.username}
-              </PillLink>
-            }
-          />
-        </SurfaceCard>
+      <SurfaceCard className="p-6 sm:p-8 lg:p-10">
+        <SectionHeader
+          eyebrow={hero.eyebrow}
+          title={hero.title}
+          description={hero.description}
+          action={
+            <PillLink href={githubProfile.url} external>
+              <Github className="h-4 w-4" />
+              @{githubProfile.username}
+            </PillLink>
+          }
+        />
+      </SurfaceCard>
 
-        <Suspense fallback={<ContributionCardSkeleton />}>
-          <GithubContributionsCard username={githubProfile.username} url={githubProfile.url} />
-        </Suspense>
+      <Suspense fallback={<ContributionCardSkeleton />}>
+        <GithubContributionsCard username={githubProfile.username} url={githubProfile.url} />
+      </Suspense>
 
-        <section className="border-t border-dashed border-stone-200/80 pt-6 dark:border-white/10">
-          <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-stone-300">
-            <FolderKanban className="h-4 w-4" />
-            <span>{projectsContent.listHeading}</span>
-          </div>
+      <section className="border-t border-dashed border-stone-200/80 pt-6 dark:border-white/10">
+        <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-stone-300">
+          <FolderKanban className="h-4 w-4" />
+          <span>{projectsContent.listHeading}</span>
+        </div>
 
-          <div className="mt-5 grid gap-5 lg:grid-cols-2">
-            {projects.map((project) => (
-              <ProjectPreviewCard key={project.slug} project={project} />
-            ))}
-          </div>
-        </section>
+        <div className="mt-5 grid grid-flow-dense items-start gap-5 md:grid-cols-2 xl:grid-cols-4">
+          {projects.map((project) => (
+            <ProjectBentoCard key={project.slug} project={project} />
+          ))}
+        </div>
+      </section>
     </PageCanvas>
   )
 }

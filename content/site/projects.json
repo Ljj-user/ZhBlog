@@ -6,44 +6,69 @@
   "hero": {
     "eyebrow": "PROJECTS & TOOLS",
     "title": "项目",
-    "description": ""
+    "description": "这里不只是仓库列表，更像一份正在持续生长的作品集。每个项目都记录了我为什么做、做到哪里，以及中间踩过的坑。"
   },
-  "listHeading": "Projects & Tools",
+  "listHeading": "Selected Builds",
   "items": [
     {
       "slug": "cryptobacktest-learn",
       "title": "Cryptobacktest-learn",
       "tags": ["GitHub", "Backtest"],
-      "description": "围绕回测方向做的实验仓库，用来记录策略研究、练习和相关开发过程。",
-      "href": "https://github.com/Ljj-user/Cryptobacktest-learn"
+      "description": "围绕加密回测流程搭的实验仓库，用来记录策略验证、参数对比和研究笔记，不把想法只停在截图里。",
+      "href": "https://github.com/Ljj-user/Cryptobacktest-learn",
+      "featured": false,
+      "pain": "想法很多，但如果没有可复现的回测流程，判断常常会停留在感觉层面。",
+      "result": "把策略实验、数据处理和回测记录整理成一套可持续迭代的练习仓库。",
+      "lesson": "先把验证链路跑顺，再追求复杂策略，能明显减少无效试错。",
+      "developmentVibe": "像在搭自己的量化练功房"
     },
     {
       "slug": "crypto-sentinel",
       "title": "Crypto-sentinel",
       "tags": ["GitHub", "Monitor"],
-      "description": "加密资产监控相关项目，用来沉淀预警、观察与自动化实践。",
-      "href": "https://github.com/Ljj-user/Crypto-sentinel"
+      "description": "围绕行情监控和预警整理的一套观察型项目，核心不是炫技，而是把高频盯盘改成更省心的自动化提醒。",
+      "href": "https://github.com/Ljj-user/Crypto-sentinel",
+      "featured": true,
+      "pain": "人工盯盘容易漏信号，也很难长期保持稳定注意力。",
+      "result": "做出一套面向监控、预警和观察的自动化骨架，把重复盯盘动作交给脚本。",
+      "lesson": "监控系统的重点不是功能堆叠，而是阈值、噪音和通知节奏的平衡。",
+      "developmentVibe": "AI 一起陪我把告警噪音磨到能真正用"
     },
     {
       "slug": "rare-earth-nuggets",
       "title": "Rare-earth-Nuggets",
       "tags": ["GitHub", "Collection"],
-      "description": "用于整理想法、资料和项目碎片的仓库，偏向持续积累与迭代。",
-      "href": "https://github.com/Ljj-user/Rare-earth-Nuggets"
+      "description": "一个长期积累型仓库，用来收拢想法、资料和项目碎片，让零散输入最终能回流到真正可用的输出里。",
+      "href": "https://github.com/Ljj-user/Rare-earth-Nuggets",
+      "featured": false,
+      "pain": "平时的灵感、资料和片段很容易散落在不同工具里，久了就难以复用。",
+      "result": "把碎片信息整理成可回看、可延展、可继续加工的知识集合。",
+      "lesson": "收藏不是目的，能被重新拿出来使用，积累才真正成立。",
+      "developmentVibe": "像给未来的自己埋信息补给包"
     },
     {
       "slug": "zhblog",
       "title": "ZhBlog",
       "tags": ["GitHub", "Blog"],
-      "description": "当前博客项目的源码仓库，包含页面搭建、样式调整和内容组织。",
-      "href": "https://github.com/Ljj-user/ZhBlog"
+      "description": "当前博客的源码仓库，重点不只是页面上线，而是把内容、视觉、后台编辑和日常维护做成一套顺手的个人系统。",
+      "href": "https://github.com/Ljj-user/ZhBlog",
+      "featured": true,
+      "pain": "很多个人站看上去像模板拼装，内容更新和设计维护也很容易割裂。",
+      "result": "用 Next.js、MDX 和内容配置把博客、项目、照片和后台编辑串成一个统一体验。",
+      "lesson": "个人站真正难的是持续迭代的手感，设计系统和内容结构必须一起长出来。",
+      "developmentVibe": "像和 AI 结对打磨一个会呼吸的个人角落"
     },
     {
       "slug": "community-service",
       "title": "community-service",
       "tags": ["GitHub", "Full Stack"],
-      "description": "社区服务方向的项目仓库，承载完整功能实现与产品化尝试。",
-      "href": "https://github.com/Ljj-user/community-service"
+      "description": "面向社区服务场景的完整项目尝试，包含从功能实现到产品化落地的思考，偏向更真实的全栈练习。",
+      "href": "https://github.com/Ljj-user/community-service",
+      "featured": true,
+      "pain": "社区类产品需求杂、角色多，如果只有单点功能，很难验证整体可用性。",
+      "result": "承载了更完整的业务流程实现，也推动自己去思考交互、数据流和产品边界。",
+      "lesson": "全栈项目不只是把前后端接起来，更要学会管理复杂度和优先级。",
+      "developmentVibe": "偏实战，像一边写功能一边做产品判断"
     }
   ]
 }

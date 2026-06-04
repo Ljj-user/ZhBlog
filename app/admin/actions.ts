@@ -13,6 +13,7 @@ import {
   githubProfileSchema,
   homeHeroSchema,
   navigationItemsSchema,
+  nowCardSchema,
   noticeCardSchema,
   photoItemsSchema,
   playerSchema,
@@ -86,7 +87,10 @@ function parseProjectItems(value: string) {
     .map((line) => line.trim())
     .filter(Boolean)
     .map((line) => {
-      const [slug, title, href, tags, description] = line.split("|").map((item) => item.trim())
+      const [slug, title, href, tags, featured, description, pain, result, lesson, developmentVibe] = line
+        .split("|")
+        .map((item) => item.trim())
+
       return {
         slug: slug ?? "",
         title: title ?? "",
@@ -95,7 +99,12 @@ function parseProjectItems(value: string) {
           tags?.split(",")
             .map((item) => item.trim())
             .filter(Boolean) ?? [],
+        featured: parseBoolean(featured ?? ""),
         description: description ?? "",
+        pain: pain ?? "",
+        result: result ?? "",
+        lesson: lesson ?? "",
+        developmentVibe: developmentVibe ?? "",
       }
     })
 }
@@ -149,9 +158,26 @@ function parsePhotoItems(value: string) {
     .map((line) => line.trim())
     .filter(Boolean)
     .map((line) => {
-      const [id, src, alt, width, height, albumId, date, category, featured, sortOrder, tags, caption] = line
-        .split("|")
-        .map((item) => item.trim())
+      const [
+        id,
+        src,
+        alt,
+        width,
+        height,
+        albumId,
+        date,
+        category,
+        featured,
+        sortOrder,
+        tags,
+        caption,
+        location,
+        exifCamera,
+        exifFocalLength,
+        exifAperture,
+        exifShutterSpeed,
+        exifIso,
+      ] = line.split("|").map((item) => item.trim())
 
       return {
         id: id ?? "",
@@ -169,6 +195,12 @@ function parsePhotoItems(value: string) {
             .map((item) => item.trim())
             .filter(Boolean) ?? [],
         caption: caption ?? "",
+        location: location ?? "",
+        exifCamera: exifCamera ?? "",
+        exifFocalLength: exifFocalLength ?? "",
+        exifAperture: exifAperture ?? "",
+        exifShutterSpeed: exifShutterSpeed ?? "",
+        exifIso: exifIso ?? "",
       }
     })
 }
@@ -225,6 +257,7 @@ async function writePostFile(input: {
   slug: string
   title: string
   description: string
+  aiQuote: string
   date: string
   category: string
   tags: string[]
@@ -238,6 +271,7 @@ async function writePostFile(input: {
   const fileContent = matter.stringify(input.content.trimEnd(), {
     title: input.title,
     description: input.description,
+    aiQuote: input.aiQuote,
     date: input.date,
     category: input.category,
     tags: input.tags,
@@ -354,10 +388,11 @@ export async function saveHomeQuickLinks(_: AdminActionState, formData: FormData
 }
 
 export async function saveHomeNowCard(_: AdminActionState, formData: FormData): Promise<AdminActionState> {
-  const parsed = noticeCardSchema.safeParse({
+  const parsed = nowCardSchema.safeParse({
     eyebrow: formData.get("eyebrow"),
     title: formData.get("title"),
     items: parseLines(String(formData.get("items") ?? "")),
+    updatedAt: formData.get("updatedAt"),
   })
 
   if (!parsed.success) return failure(parsed.error.issues[0]?.message ?? "Failed to save now card")
@@ -610,6 +645,7 @@ export async function savePostDraft(_: AdminActionState, formData: FormData): Pr
   const slug = normalizeSlug(slugInput)
   const title = String(formData.get("title") ?? "").trim()
   const description = String(formData.get("description") ?? "").trim()
+  const aiQuote = String(formData.get("aiQuote") ?? "").trim()
   const date = String(formData.get("date") ?? "").trim()
   const category = String(formData.get("category") ?? "").trim()
   const tags = parseTags(String(formData.get("tags") ?? ""))
@@ -631,6 +667,7 @@ export async function savePostDraft(_: AdminActionState, formData: FormData): Pr
     slug,
     title,
     description,
+    aiQuote,
     date,
     category,
     tags,

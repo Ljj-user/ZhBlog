@@ -11,23 +11,44 @@ const initialState = { ok: false, message: "" }
 
 export function ProjectsListEditor({ items }: { items: ProjectItem[] }) {
   const [state, formAction] = useActionState(saveProjectItems, initialState)
+  const serializedItems = items
+    .map((item) =>
+      [
+        item.slug,
+        item.title,
+        item.href,
+        item.tags.join(", "),
+        item.featured ? "true" : "false",
+        item.description,
+        item.pain,
+        item.result,
+        item.lesson,
+        item.developmentVibe,
+      ].join(" | "),
+    )
+    .join("\n")
 
   return (
-    <AdminSectionCard title="项目列表" description="每行一条，格式：slug | 标题 | 链接 | 标签1, 标签2 | 描述。列表独立保存。">
+    <AdminSectionCard
+      title="Project List"
+      description="One item per line: slug | title | href | tag1, tag2 | featured(true/false) | description | pain | result | lesson | developmentVibe."
+    >
       <form action={formAction} className="space-y-4">
         <label className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
-          <span>项目项</span>
+          <span>Project Items</span>
           <textarea
             name="items"
-            defaultValue={items.map((item) => `${item.slug} | ${item.title} | ${item.href} | ${item.tags.join(", ")} | ${item.description}`).join("\n")}
+            defaultValue={serializedItems}
             rows={12}
             className="w-full rounded-xl border border-black/10 bg-white px-3 py-2.5 font-mono text-sm dark:border-white/10 dark:bg-white/[0.05]"
           />
         </label>
-        <p className="text-xs leading-5 text-slate-500 dark:text-slate-400">示例：zhblog | ZhBlog | https://github.com/name/repo | GitHub, Blog | 当前博客项目源码仓库</p>
+        <p className="text-xs leading-5 text-slate-500 dark:text-slate-400">
+          Example: zhblog | ZhBlog | https://github.com/name/repo | GitHub, Blog | true | A blog system built around content and design | Wanted a personal site that felt richer than a repo index | Next.js + MDX + admin editing | Unified visual language and mobile polish | AI felt like a steady pair-programming partner
+        </p>
         <FormStatusMessage state={state} />
         <div className="flex justify-end">
-          <FormSubmitButton label="保存项目列表" />
+          <FormSubmitButton label="Save Project List" />
         </div>
       </form>
     </AdminSectionCard>

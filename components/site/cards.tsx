@@ -36,7 +36,7 @@ export function SurfaceCard({
   return (
     <section
       className={cn(
-        "rounded-[1.65rem] border border-stone-200/80 bg-[#fbfaf6]/88 shadow-[0_18px_55px_rgba(47,55,48,0.1)] backdrop-blur-xl dark:border-white/10 dark:bg-[#141816]/88 dark:shadow-[0_18px_60px_rgba(0,0,0,0.28)]",
+        "section-card",
         className,
       )}
     >
@@ -55,7 +55,7 @@ export function InsetCard({
   return (
     <div
       className={cn(
-        "rounded-[1.15rem] border border-stone-200/80 bg-white/62 p-4 shadow-[0_10px_24px_rgba(47,55,48,0.05)] dark:border-white/10 dark:bg-white/[0.04] dark:shadow-none",
+        "card-shell rounded-xl bg-white/62 p-4 shadow-[0_10px_24px_rgba(47,55,48,0.05)] dark:bg-white/[0.04] dark:shadow-none",
         className,
       )}
     >
@@ -122,20 +122,25 @@ export function NoticeCard({
   title,
   items,
   iconName,
+  meta,
   className,
 }: {
   eyebrow: string
   title: string
   items: string[]
   iconName?: "sparkles"
+  meta?: React.ReactNode
   className?: string
 }) {
   return (
     <SurfaceCard className={cn("overflow-hidden p-0", className)}>
       <div className="border-b border-stone-200/70 px-4 py-3.5 dark:border-white/10">
-        <div className="flex items-center gap-2 font-mono text-[0.64rem] uppercase tracking-[0.18em] text-stone-500 dark:text-stone-400">
-          {iconName === "sparkles" ? <Sparkles className="h-4 w-4" /> : null}
-          <span>{eyebrow}</span>
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
+          <div className="flex items-center gap-2 font-mono text-[0.64rem] uppercase tracking-[0.18em] text-stone-500 dark:text-stone-400">
+            {iconName === "sparkles" ? <Sparkles className="h-4 w-4" /> : null}
+            <span>{eyebrow}</span>
+          </div>
+          {meta ? <div className="text-left sm:shrink-0 sm:text-right">{meta}</div> : null}
         </div>
         <h3 className="mt-2 text-lg font-medium tracking-[-0.03em] text-slate-900 dark:text-stone-100">{title}</h3>
       </div>
@@ -264,7 +269,7 @@ export function PostPreviewCard({
     return (
       <Link
         href={`/posts/${post.slug}`}
-        className="group flex items-center justify-between gap-4 rounded-[1rem] border border-stone-200 bg-white/70 px-4 py-3 transition-all hover:-translate-y-0.5 hover:border-stone-300 hover:bg-white dark:border-white/10 dark:bg-white/[0.04] dark:hover:bg-white/[0.08]"
+        className="group flex items-start justify-between gap-4 rounded-[1rem] border border-stone-200 bg-white/70 px-4 py-3 transition-all hover:-translate-y-0.5 hover:border-stone-300 hover:bg-white dark:border-white/10 dark:bg-white/[0.04] dark:hover:bg-white/[0.08] sm:items-center"
       >
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
@@ -272,12 +277,13 @@ export function PostPreviewCard({
             <span className="h-1 w-1 rounded-full bg-stone-300 dark:bg-stone-600" />
             <span className="text-xs text-stone-400 dark:text-stone-500">{post.date}</span>
           </div>
-          <h3 className="mt-1.5 truncate text-[1.05rem] font-medium leading-snug tracking-[-0.02em] text-slate-900 dark:text-stone-100">
+          <h3 className="mt-1.5 line-clamp-2 text-[1.05rem] font-medium leading-snug tracking-[-0.02em] text-slate-900 dark:text-stone-100 sm:truncate">
             {post.title}
           </h3>
-          <p className="mt-1 truncate text-sm text-slate-500 dark:text-stone-400">{post.description}</p>
+          <p className="mt-1 line-clamp-2 text-sm text-slate-500 dark:text-stone-400 sm:truncate">{post.description}</p>
+          {post.aiQuote ? <p className="mt-1 line-clamp-2 text-sm italic text-zinc-400 dark:text-zinc-500 sm:truncate">{post.aiQuote}</p> : null}
         </div>
-        <ArrowRight className="h-4 w-4 shrink-0 text-stone-400 transition-transform group-hover:translate-x-1 dark:text-stone-500" />
+        <ArrowRight className="mt-1 hidden h-4 w-4 shrink-0 text-stone-400 transition-transform group-hover:translate-x-1 dark:text-stone-500 sm:mt-0 sm:block" />
       </Link>
     )
   }
@@ -286,10 +292,10 @@ export function PostPreviewCard({
     <Link
       href={`/posts/${post.slug}`}
       className={cn(
-        "group flex h-full flex-col rounded-[1.25rem] border transition-all hover:-translate-y-1",
+        "group page-enter flex h-full flex-col rounded-2xl border transition-all hover:-translate-y-1",
         featured
           ? "border-slate-800 bg-slate-900 text-white shadow-[0_18px_50px_rgba(15,23,42,0.18)] dark:border-white/10 lg:col-span-2 lg:p-6"
-          : "border-stone-200 bg-[#fbfaf6]/78 shadow-[0_12px_32px_rgba(47,55,48,0.07)] hover:border-stone-300 hover:bg-white dark:border-white/10 dark:bg-white/[0.04] dark:hover:bg-white/[0.08]",
+          : "border-zinc-100 bg-[#fbfaf6]/78 shadow-[0_12px_32px_rgba(47,55,48,0.07)] hover:border-stone-300 hover:bg-white dark:border-zinc-800 dark:bg-white/[0.04] dark:hover:bg-white/[0.08]",
         !featured && "p-5",
       )}
     >
@@ -324,6 +330,9 @@ export function PostPreviewCard({
       >
         {post.description}
       </p>
+      {post.aiQuote ? (
+        <p className={cn("italic text-sm", featured ? "mt-3 text-white/44" : "mt-3 text-zinc-400 dark:text-zinc-500")}>{post.aiQuote}</p>
+      ) : null}
       <p className={cn("text-xs", featured ? "mt-6 text-white/44" : "mt-auto pt-6 text-stone-400 dark:text-stone-500")}>
         {post.date}
       </p>
@@ -345,7 +354,7 @@ export function ProjectPreviewCard({
   project: ProjectPreview
 }) {
   return (
-    <article className="rounded-[1.35rem] border border-stone-200 bg-[#fbfaf6]/78 p-5 shadow-[0_12px_32px_rgba(47,55,48,0.07)] backdrop-blur-xl transition-all duration-200 hover:-translate-y-1 hover:border-stone-300 hover:bg-white dark:border-white/10 dark:bg-white/[0.04] dark:hover:bg-white/[0.08]">
+    <article className="page-enter rounded-2xl border border-zinc-100 bg-[#fbfaf6]/78 p-5 shadow-[0_12px_32px_rgba(47,55,48,0.07)] backdrop-blur-xl transition-all duration-200 hover:-translate-y-1 hover:border-stone-300 hover:bg-white dark:border-zinc-800 dark:bg-white/[0.04] dark:hover:bg-white/[0.08]">
       <div className="flex h-full flex-col">
         <h3 className="text-xl font-medium tracking-[-0.03em] text-slate-900 dark:text-stone-100">{project.title}</h3>
 
