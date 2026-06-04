@@ -98,7 +98,24 @@ export function getAllPostsForAdmin(): PostMeta[] {
   return getRealPosts({ includeDrafts: true })
 }
 
-export function getPostBySlug(slug: string): Post | null {
+function readPostFile(fullPath: string, slug: string): Post {
+  const fileContents = fs.readFileSync(fullPath, "utf8")
+  const { data, content } = matter(fileContents)
+
+  return {
+    slug,
+    title: data.title || slug,
+    description: data.description || "",
+    date: normalizeDate(data.date),
+    category: data.category || "未分类",
+    tags: Array.isArray(data.tags) ? data.tags : [],
+    coverImage: data.coverImage,
+    draft: Boolean(data.draft),
+    content,
+  }
+}
+
+export function getPostBySlug(slug: string, options?: { includeDrafts?: boolean }): Post | null {
   const mdxPath = path.join(postsDirectory, `${slug}.mdx`)
   const mdPath = path.join(postsDirectory, `${slug}.md`)
 
@@ -108,24 +125,20 @@ export function getPostBySlug(slug: string): Post | null {
   } else if (fs.existsSync(mdPath)) {
     fullPath = mdPath
   } else {
-    const samplePost = getSamplePostsWithContent().find((post) => post.slug === slug)
-    return samplePost ?? null
+    if (!fs.existsSync(postsDirectory)) {
+      const samplePost = getSamplePostsWithContent().find((post) => post.slug === slug)
+      return samplePost ?? null
+    }
+
+    return null
   }
 
-  const fileContents = fs.readFileSync(fullPath, "utf8")
-  const { data, content } = matter(fileContents)
-
-  return {
-    slug,
-    title: data.title || slug,
-    description: data.description || "",
-    date: data.date || new Date().toISOString().split("T")[0],
-    category: data.category || "未分类",
-    tags: Array.isArray(data.tags) ? data.tags : [],
-    coverImage: data.coverImage,
-    draft: Boolean(data.draft),
-    content,
+  const post = readPostFile(fullPath, slug)
+  if (post.draft && !options?.includeDrafts) {
+    return null
   }
+
+  return post
 }
 
 export function getPostBySlugForAdmin(slug: string): Post | null {
@@ -141,20 +154,7 @@ export function getPostBySlugForAdmin(slug: string): Post | null {
     return null
   }
 
-  const fileContents = fs.readFileSync(fullPath, "utf8")
-  const { data, content } = matter(fileContents)
-
-  return {
-    slug,
-    title: data.title || slug,
-    description: data.description || "",
-    date: data.date || new Date().toISOString().split("T")[0],
-    category: data.category || "未分类",
-    tags: Array.isArray(data.tags) ? data.tags : [],
-    coverImage: data.coverImage,
-    draft: Boolean(data.draft),
-    content,
-  }
+  return readPostFile(fullPath, slug)
 }
 
 export function getPostsByCategory(category: string): PostMeta[] {

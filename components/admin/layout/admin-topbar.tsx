@@ -16,7 +16,7 @@ export function AdminTopbar() {
     <div className="mb-4 space-y-3">
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-[1.7rem] border border-black/10 bg-white/72 px-4 py-3 shadow-[0_16px_40px_rgba(15,23,42,0.06)] backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.04]">
         <div className="flex items-center gap-3">
-          <AdminStatusBadge label="Live Save" tone="emerald" />
+          <AdminStatusBadge label="Live Save" tone="green" />
           <p className="text-sm text-slate-500 dark:text-slate-400">
             当前所在：<span className="font-medium text-slate-700 dark:text-slate-200">{currentItem.label}</span>。Profile、Home、Navigation、Friends、Projects、Albums、Photos 已支持独立保存。
           </p>

@@ -28,7 +28,7 @@ import {
   type AdminActionState,
 } from "@/lib/admin-content-schemas"
 import { assertAdminEnabled } from "@/lib/admin-access"
-import { getFriendsContent, getHomeContent, getProjectsContent, getSiteProfile } from "@/lib/content"
+import { getFriendsContent, getHomeContent, getPhotoAlbums, getProjectsContent, getSiteProfile } from "@/lib/content"
 import { getPostBySlugForAdmin, getPostsDirectory } from "@/lib/posts"
 
 const profileFilePath = path.join(process.cwd(), "content", "site", "profile.json")
@@ -195,6 +195,17 @@ function revalidatePhotoSurfaces() {
   revalidatePath("/photos")
   revalidatePath("/admin/albums")
   revalidatePath("/admin/photos")
+}
+
+function validatePhotoAlbumReferences(albumIds: string[], photoAlbumIds: string[]) {
+  const validAlbumIds = new Set(albumIds)
+  const missingAlbumIds = Array.from(new Set(photoAlbumIds.filter((albumId) => !validAlbumIds.has(albumId))))
+
+  if (missingAlbumIds.length > 0) {
+    return failure(`Unknown album id: ${missingAlbumIds.join(", ")}`)
+  }
+
+  return null
 }
 
 function normalizeSlug(value: string) {
@@ -561,6 +572,13 @@ export async function saveAlbumItems(_: AdminActionState, formData: FormData): P
 
   if (!parsed.success) return failure(parsed.error.issues[0]?.message ?? "Failed to save albums")
 
+  const currentPhotoAlbumIds = JSON.parse(await fs.readFile(photosFilePath, "utf8")).items.map((photo: { albumId: string }) => photo.albumId)
+  const photoAlbumValidation = validatePhotoAlbumReferences(
+    parsed.data.items.map((album) => album.id),
+    currentPhotoAlbumIds,
+  )
+  if (photoAlbumValidation) return photoAlbumValidation
+
   await writeJsonFile(albumsFilePath, { items: parsed.data.items })
   revalidatePhotoSurfaces()
   return success("Albums saved")
@@ -572,6 +590,12 @@ export async function savePhotoItems(_: AdminActionState, formData: FormData): P
   })
 
   if (!parsed.success) return failure(parsed.error.issues[0]?.message ?? "Failed to save photos")
+
+  const photoAlbumValidation = validatePhotoAlbumReferences(
+    getPhotoAlbums().map((album) => album.id),
+    parsed.data.items.map((photo) => photo.albumId),
+  )
+  if (photoAlbumValidation) return photoAlbumValidation
 
   await writeJsonFile(photosFilePath, { items: parsed.data.items })
   revalidatePhotoSurfaces()

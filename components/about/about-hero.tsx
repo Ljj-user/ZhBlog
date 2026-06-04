@@ -28,7 +28,14 @@ export function AboutHero({
     <SurfaceCard className="overflow-hidden p-0">
       <div className="relative h-56 w-full sm:h-72 lg:h-80">
         {profile.coverImage ? (
-          <Image src={profile.coverImage} alt={`${profile.name} cover`} fill priority className="object-cover" />
+          <Image
+            src={profile.coverImage}
+            alt={`${profile.name} cover`}
+            fill
+            priority
+            sizes="(max-width: 1023px) 100vw, 1260px"
+            className="object-cover"
+          />
         ) : (
           <div className="absolute inset-0 bg-stone-200 dark:bg-stone-800" />
         )}
@@ -40,7 +47,7 @@ export function AboutHero({
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div className="flex items-end gap-4">
               <div className="relative h-28 w-28 overflow-hidden rounded-[2rem] border-[4px] border-[#fbfaf6] bg-white shadow-[0_18px_40px_rgba(15,23,42,0.14)] dark:border-[#141816] dark:bg-stone-950 dark:shadow-none sm:h-36 sm:w-36">
-                <Image src={profile.avatar} alt={profile.name} fill className="object-cover" />
+                <Image src={profile.avatar} alt={profile.name} fill sizes="(max-width: 639px) 112px, 144px" className="object-cover" />
               </div>
 
               <div className="pb-2">

@@ -86,11 +86,11 @@ export function MDXContent({ content }: MDXContentProps) {
           return (
             <span className="my-4 block overflow-hidden rounded-lg">
               <Image
-                src={src}
+                src={String(src)}
                 alt={alt || ""}
                 width={1200}
                 height={720}
-                unoptimized
+                sizes="100vw"
                 className="h-auto w-full rounded-lg"
               />
             </span>

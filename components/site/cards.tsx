@@ -232,6 +232,7 @@ export function PolaroidPhotoCard({
             src={image}
             alt={title}
             fill
+            sizes="(max-width: 639px) 173px, (max-width: 1279px) 192px, 220px"
             draggable={false}
             className="object-cover transition-transform duration-500 group-hover:scale-[1.06]"
           />

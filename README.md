@@ -27,15 +27,12 @@ Main content files:
 Admin scaffold:
 
 - `http://localhost:3000/admin`
-- `public/admin/config.yml`
 
 Admin is intended for local-only content editing.
 
 - Local development: `/admin` is enabled by default
 - Vercel deployments: `/admin` is disabled by default and returns `404`
 - If you ever need to re-enable it in another environment, set `ADMIN_ENABLED=true`
-
-Before using the CMS in production, replace the placeholder GitHub repo in `public/admin/config.yml`.
 
 More details:
 

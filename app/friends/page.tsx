@@ -34,7 +34,14 @@ export default function FriendsPage() {
                     <div className="flex items-center gap-4">
                       {friend.avatar ? (
                         <div className="relative h-14 w-14 overflow-hidden rounded-[1.1rem] border border-black/8 bg-white shadow-[0_10px_24px_rgba(15,23,42,0.08)] dark:border-white/10 dark:bg-white/[0.06]">
-                          <Image src={friend.avatar} alt={`${friend.name} avatar`} fill className="object-cover" />
+                          <Image
+                            src={friend.avatar}
+                            alt={`${friend.name} avatar`}
+                            fill
+                            sizes="56px"
+                            unoptimized
+                            className="object-cover"
+                          />
                         </div>
                       ) : (
                         <div className="flex h-14 w-14 items-center justify-center rounded-[1.1rem] border border-black/8 bg-white text-lg font-medium text-slate-500 shadow-[0_10px_24px_rgba(15,23,42,0.08)] dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300">

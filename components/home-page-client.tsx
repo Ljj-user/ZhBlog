@@ -38,7 +38,7 @@ function ProfileSidebar({ profile }: { profile: SiteProfile }) {
       <div className="px-4 pb-4 pt-3">
         <div className="-mt-10 flex items-end justify-between">
           <div className="relative h-[4.8rem] w-[4.8rem] overflow-hidden rounded-[1.1rem] border-[4px] border-[#fbfaf6] bg-white shadow-[0_12px_28px_rgba(47,55,48,0.14)] dark:border-[#141816] dark:bg-stone-900">
-            <Image src={profile.avatar} alt={`${profile.siteTitle} avatar`} fill className="object-cover" />
+            <Image src={profile.avatar} alt={`${profile.siteTitle} avatar`} fill sizes="77px" className="object-cover" />
           </div>
           <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 font-mono text-[0.58rem] uppercase tracking-[0.18em] text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-500/10 dark:text-emerald-300">
             {profile.availabilityLabel}
@@ -146,14 +146,21 @@ function HomeHero({
           <div className="relative hidden min-h-[430px] lg:block">
             <div className="absolute bottom-0 right-0 w-[78%] overflow-hidden rounded-[1.4rem] bg-stone-100 shadow-[0_24px_60px_rgba(47,55,48,0.16)] ring-1 ring-stone-200 dark:bg-stone-900 dark:ring-white/10">
               <div className="relative aspect-[4/5.2]">
-                <Image src={heroImage} alt={heroPhoto?.alt ?? profile.siteTitle} fill priority className="object-cover" />
+                <Image
+                  src={heroImage}
+                  alt={heroPhoto?.alt ?? profile.siteTitle}
+                  fill
+                  priority
+                  sizes="(max-width: 1279px) 0px, (max-width: 1535px) 420px, 460px"
+                  className="object-cover"
+                />
               </div>
             </div>
 
             <div className="absolute left-0 top-14 w-[13.5rem] rounded-[1.2rem] border border-stone-200 bg-[#fbfaf6]/86 p-3 shadow-[0_18px_44px_rgba(47,55,48,0.12)] backdrop-blur dark:border-white/10 dark:bg-[#141816]/86">
               <div className="flex items-center gap-3">
                 <div className="relative h-12 w-12 overflow-hidden rounded-[0.9rem] bg-stone-100">
-                  <Image src={profile.avatar} alt={`${profile.siteTitle} avatar`} fill className="object-cover" />
+                  <Image src={profile.avatar} alt={`${profile.siteTitle} avatar`} fill sizes="48px" className="object-cover" />
                 </div>
                 <div className="min-w-0">
                   <p className="truncate text-sm font-medium text-slate-900 dark:text-stone-100">{profile.siteTitle}</p>
@@ -170,7 +177,13 @@ function HomeHero({
                   className="group block w-16 overflow-hidden rounded-[0.8rem] bg-white p-1.5 shadow-[0_12px_30px_rgba(47,55,48,0.12)] ring-1 ring-stone-200 transition-transform hover:-translate-y-1 dark:bg-stone-950 dark:ring-white/10"
                 >
                   <div className="relative aspect-[4/5]">
-                    <Image src={photo.src} alt={photo.alt} fill className="rounded-[0.55rem] object-cover transition-transform duration-500 group-hover:scale-[1.05]" />
+                    <Image
+                      src={photo.src}
+                      alt={photo.alt}
+                      fill
+                      sizes="64px"
+                      className="rounded-[0.55rem] object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+                    />
                   </div>
                 </Link>
               ))}
@@ -358,7 +371,14 @@ function PhotoGallerySectionCanvas({
               >
                 <div className="relative overflow-hidden rounded-[0.85rem] bg-stone-100 dark:bg-stone-900">
                   <div className="relative aspect-[4/5]">
-                    <Image src={photo.src} alt={photo.alt} fill draggable={false} className="object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
+                    <Image
+                      src={photo.src}
+                      alt={photo.alt}
+                      fill
+                      sizes="(max-width: 639px) 196px, 220px"
+                      draggable={false}
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                    />
                   </div>
                 </div>
                 <div className="px-1 pb-1 pt-3">
